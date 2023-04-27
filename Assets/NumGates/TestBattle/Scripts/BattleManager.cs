@@ -15,15 +15,35 @@ namespace NumGates.TestBattle
         private List<Ally> allies;
         private List<Enemy> enemies;
 
+        private TimerManager timerManager;
+
+        public void InitBattle(TimerManager timerManager)
+        {
+            this.timerManager = timerManager;
+        }
+
+        public void InitCharacter()
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.InitCharacter(timerManager);
+            }
+
+            foreach (Ally ally in allies)
+            {
+                ally.InitCharacter(timerManager);
+            }
+        }
+
         public void AddCharacter(BattleGroup group, Character character, int position)
         {
             switch (group)
             {
-                case BattleGroup.Ally: 
-                    allies.Insert(position, character as Ally);  
+                case BattleGroup.Ally:
+                    allies.Insert(position, character as Ally);
                     break;
-                case BattleGroup.Enemy: 
-                    enemies.Insert(position, character as Enemy); 
+                case BattleGroup.Enemy:
+                    enemies.Insert(position, character as Enemy);
                     break;
             }
         }
@@ -49,19 +69,6 @@ namespace NumGates.TestBattle
         //        case BattleGroup.Enemy: break;
         //    }
         //}
-
-        public void InitCharacter()
-        {
-            foreach(Ally ally in allies)
-            {
-                ally.InitCharacter();
-            }
-
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.InitCharacter();
-            }
-        }
     }
 }
 

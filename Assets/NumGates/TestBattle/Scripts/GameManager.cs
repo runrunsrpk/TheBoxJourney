@@ -6,16 +6,32 @@ namespace NumGates.TestBattle
 {
     public class GameManager : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public static GameManager instance { get; private set; }
 
+        [SerializeField] private LevelManager levelManager;
+        [SerializeField] private UIManager uiManager;
+
+        private void Awake()
+        {
+            // If there is an instance, and it's not me, delete myself.
+
+            if (instance != null && instance != this)
+            {
+                Destroy(this);
+            }
+
+            instance = this;
+            DontDestroyOnLoad(instance);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
         {
+            
+        }
 
+        private void Update()
+        {
+            
         }
     }
 }

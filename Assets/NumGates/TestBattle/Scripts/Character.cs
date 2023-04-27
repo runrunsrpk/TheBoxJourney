@@ -25,8 +25,10 @@ namespace NumGates.TestBattle
             //InitCharacter();
         }
 
-        public void InitCharacter()
+        public void InitCharacter(TimerManager timerManager)
         {
+            this.timerManager = timerManager;
+
             InitTimerAction();
             InitStatus();
         }

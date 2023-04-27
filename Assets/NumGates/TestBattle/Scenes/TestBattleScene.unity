@@ -752,7 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bae61ceabb83749bfc395897041dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeManager: {fileID: 6301555141947227174, guid: b1410c6a899016b42a67571e37aa2f21, type: 3}
+  timerManager: {fileID: 6301555141947227174, guid: b1410c6a899016b42a67571e37aa2f21, type: 3}
   battleManager: {fileID: 2071739000489719936, guid: 3470ac2712eb7394eb1c3ea3684f4f9c, type: 3}
 --- !u!4 &1725735313
 Transform:
