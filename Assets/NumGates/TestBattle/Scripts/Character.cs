@@ -31,13 +31,13 @@ namespace NumGates.TestBattle
 
         private void InitAction()
         {
-            TimerHelper.OnInitTimer += InitTimer;
-            TimerHelper.OnStartTimer += StartTimer;
-            TimerHelper.OnUpdateTimer += UpdateTimer;
-            TimerHelper.OnPauseTimer += PauseTimer;
-            TimerHelper.OnResumeTimer += ResumeTimer;
-            TimerHelper.OnStopTimer += StopTimer;
-            TimerHelper.OnResetTimer += ResetTimer;
+            TimerManager.OnInitTimer += InitTimer;
+            TimerManager.OnStartTimer += StartTimer;
+            TimerManager.OnUpdateTimer += UpdateTimer;
+            TimerManager.OnPauseTimer += PauseTimer;
+            TimerManager.OnResumeTimer += ResumeTimer;
+            TimerManager.OnStopTimer += StopTimer;
+            TimerManager.OnResetTimer += ResetTimer;
         }
 
         protected virtual void InitStatus()
