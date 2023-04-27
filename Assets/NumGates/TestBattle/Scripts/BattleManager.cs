@@ -22,6 +22,22 @@ namespace NumGates.TestBattle
             this.timerManager = timerManager;
         }
 
+        // Bypass InitCharacter from LevelManager
+        public void InitCharacter(List<Ally> allies, List<Enemy> enemies)
+        {
+            this.enemies = enemies;
+            foreach (Enemy enemy in this.enemies)
+            {
+                enemy.InitCharacter(timerManager);
+            }
+
+            this.allies = allies;
+            foreach (Ally ally in this.allies)
+            {
+                ally.InitCharacter(timerManager);
+            }
+        }
+
         public void InitCharacter()
         {
             foreach (Enemy enemy in enemies)
@@ -32,6 +48,19 @@ namespace NumGates.TestBattle
             foreach (Ally ally in allies)
             {
                 ally.InitCharacter(timerManager);
+            }
+        }
+
+        public void AddCharacter(BattleGroup group, Character character)
+        {
+            switch (group)
+            {
+                case BattleGroup.Ally:
+                    allies.Add(character as Ally);
+                    break;
+                case BattleGroup.Enemy:
+                    enemies.Add(character as Enemy);
+                    break;
             }
         }
 

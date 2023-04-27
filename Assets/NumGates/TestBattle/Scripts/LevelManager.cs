@@ -6,6 +6,9 @@ namespace NumGates.TestBattle
 {
     public class LevelManager : MonoBehaviour
     {
+        [SerializeField] private List<Ally> allies;
+        [SerializeField] private List<Enemy> enemies;
+
         [SerializeField] private TimerManager timerManager;
         [SerializeField] private BattleManager battleManager;
 
@@ -24,10 +27,10 @@ namespace NumGates.TestBattle
 
         private void Update()
         {
-            //if(Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    DestroyManager();
-            //}
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                tempTimer.StartTimer();
+            }
 
             //if (Input.GetKeyDown(KeyCode.A))
             //{
@@ -47,6 +50,7 @@ namespace NumGates.TestBattle
             {
                 tempBattle = Instantiate(battleManager, transform);
                 tempBattle.InitBattle(tempTimer);
+                tempBattle.InitCharacter(allies, enemies);
             }
         }
 
