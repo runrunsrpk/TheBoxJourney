@@ -12,6 +12,11 @@ namespace NumGates.TestBattle
         public BattleManager BattleManager => battleManager;
         [SerializeField] private BattleManager battleManager;
 
+        private void Awake()
+        {
+
+        }
+
         private void Start()
         {
             InitManager();
@@ -24,8 +29,8 @@ namespace NumGates.TestBattle
 
         public void InitManager()
         {
-            Instantiate(timeManager);
-            Instantiate(battleManager);
+            Instantiate(timeManager, transform);
+            Instantiate(battleManager, transform);
         }
 
         public void DestroyManager()

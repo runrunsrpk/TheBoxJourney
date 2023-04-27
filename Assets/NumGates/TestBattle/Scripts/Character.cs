@@ -13,6 +13,8 @@ namespace NumGates.TestBattle
         [SerializeField] protected PrimaryStatus characterPrimaryStatus;
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
+        private TimerManager timerManager;
+
         private void Awake()
         {
 
@@ -20,24 +22,35 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            InitCharacter();
+            //InitCharacter();
         }
 
-        private void InitCharacter()
+        public void InitCharacter()
         {
-            InitAction();
+            InitTimerAction();
             InitStatus();
         }
 
-        private void InitAction()
+        private void InitTimerAction()
         {
-            TimerManager.OnInitTimer += InitTimer;
-            TimerManager.OnStartTimer += StartTimer;
-            TimerManager.OnUpdateTimer += UpdateTimer;
-            TimerManager.OnPauseTimer += PauseTimer;
-            TimerManager.OnResumeTimer += ResumeTimer;
-            TimerManager.OnStopTimer += StopTimer;
-            TimerManager.OnResetTimer += ResetTimer;
+            timerManager.OnInitTimer += InitTimer;
+            timerManager.OnStartTimer += StartTimer;
+            timerManager.OnUpdateTimer += UpdateTimer;
+            timerManager.OnPauseTimer += PauseTimer;
+            timerManager.OnResumeTimer += ResumeTimer;
+            timerManager.OnStopTimer += StopTimer;
+            timerManager.OnResetTimer += ResetTimer;
+        }
+
+        private void RemoveTimerAction()
+        {
+            timerManager.OnInitTimer -= InitTimer;
+            timerManager.OnStartTimer -= StartTimer;
+            timerManager.OnUpdateTimer -= UpdateTimer;
+            timerManager.OnPauseTimer -= PauseTimer;
+            timerManager.OnResumeTimer -= ResumeTimer;
+            timerManager.OnStopTimer -= StopTimer;
+            timerManager.OnResetTimer -= ResetTimer;
         }
 
         protected virtual void InitStatus()

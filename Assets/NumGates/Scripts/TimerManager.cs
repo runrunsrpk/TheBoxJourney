@@ -7,13 +7,13 @@ namespace NumGates
 {
     public class TimerManager : MonoBehaviour, ITimer
     {
-        public static Action OnInitTimer;
-        public static Action OnStartTimer;
-        public static Action OnUpdateTimer;
-        public static Action OnPauseTimer;
-        public static Action OnResumeTimer;
-        public static Action OnStopTimer;
-        public static Action OnResetTimer;
+        public Action OnInitTimer;
+        public Action OnStartTimer;
+        public Action OnUpdateTimer;
+        public Action OnPauseTimer;
+        public Action OnResumeTimer;
+        public Action OnStopTimer;
+        public Action OnResetTimer;
 
         private const float TICK_TIMER_MAX = 0.1f;
 
