@@ -39,10 +39,21 @@ namespace NumGates.TestBattle
 
         private void InitManager()
         {
-            tempLevelManager = Instantiate(levelManager, transform);
-            tempLevelManager.InitManager();
+            if(IsAvailableInstanstitate(levelManager, tempLevelManager))
+            {
+                tempLevelManager = Instantiate(levelManager, transform);
+                tempLevelManager.InitManager();
+            }
 
-            tempUIManager = Instantiate(uiManager, transform);
+            if(IsAvailableInstanstitate(uiManager, tempUIManager))
+            {
+                tempUIManager = Instantiate(uiManager, transform);
+            }
+        }
+
+        private bool IsAvailableInstanstitate<T>(T manager, T tempManager)
+        {
+            return manager != null && tempManager == null;
         }
     }
 }

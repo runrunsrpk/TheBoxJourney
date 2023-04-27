@@ -22,7 +22,7 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            InitManager();
+            //InitManager();
         }
 
         private void Update()

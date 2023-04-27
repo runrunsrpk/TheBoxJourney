@@ -94,7 +94,7 @@ namespace NumGates.TestBattle
         {
             Debug.Log($"Update [{this.name}] Timer ");
 
-            if(isTimerUpdate)
+            if (isTimerUpdate)
             {
                 tick++;
                 Debug.Log($"[{this.name}] Tick: {tick}");
@@ -130,6 +130,16 @@ namespace NumGates.TestBattle
             tick = 0;
         }
         #endregion
+
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+
+        public void SetFlipX(bool isFlip)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = isFlip;
+        }
 
         private IEnumerator Attack()
         {

@@ -26,15 +26,29 @@ namespace NumGates.TestBattle
         public void InitCharacter(List<Ally> allies, List<Enemy> enemies)
         {
             this.enemies = enemies;
+            Debug.Log($"Enemy count: {this.enemies.Count}");
+            int enemyPosition = 0;
+
             foreach (Enemy enemy in this.enemies)
             {
-                enemy.InitCharacter(timerManager);
+                enemyPosition++;
+                Debug.Log($"{enemy.name} Index {enemyPosition}");
+                Enemy tempEnemy = Instantiate(enemy);
+                tempEnemy.SetPosition(new Vector3(enemyPosition, 0, 1));
+                tempEnemy.InitCharacter(timerManager);
             }
 
             this.allies = allies;
+            int allyPosition = 0;
+
             foreach (Ally ally in this.allies)
             {
-                ally.InitCharacter(timerManager);
+                allyPosition--;
+                Ally tempAlly = Instantiate(ally);
+                tempAlly.SetPosition(new Vector3(allyPosition, 0, 1));
+                tempAlly.SetFlipX(true);
+                tempAlly.InitCharacter(timerManager);
+                tempAlly.InitCharacter(timerManager);
             }
         }
 
