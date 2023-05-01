@@ -27,25 +27,25 @@ namespace NumGates.TestBattle
         {
             this.enemies = enemies;
             Debug.Log($"Enemy count: {this.enemies.Count}");
-            int enemyPosition = 0;
+            int enemyIndex = 0;
 
             foreach (Enemy enemy in this.enemies)
             {
-                enemyPosition++;
-                Debug.Log($"{enemy.name} Index {enemyPosition}");
+                enemyIndex++;
+                Debug.Log($"{enemy.name} Index {enemyIndex}");
                 Enemy tempEnemy = Instantiate(enemy);
-                tempEnemy.SetPosition(new Vector3(enemyPosition, 0, 1));
+                tempEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
                 tempEnemy.InitCharacter(timerManager);
             }
 
             this.allies = allies;
-            int allyPosition = 0;
+            int allyIndex = 0;
 
             foreach (Ally ally in this.allies)
             {
-                allyPosition--;
+                allyIndex++;
                 Ally tempAlly = Instantiate(ally);
-                tempAlly.SetPosition(new Vector3(allyPosition, 0, 1));
+                tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
                 tempAlly.SetFlipX(true);
                 tempAlly.InitCharacter(timerManager);
                 tempAlly.InitCharacter(timerManager);
