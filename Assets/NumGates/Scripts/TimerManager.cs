@@ -22,8 +22,8 @@ namespace NumGates
 
         private void Start()
         {
-            InitTimer();
-            StartTimer();
+            //InitTimer();
+            //StartTimer();
         }
 
         private void Update()
