@@ -10,7 +10,7 @@ namespace NumGates.TestBattle
         // TODO: Create object pooling function
 
         [SerializeField] private List<FloatingTextUI> floatingTextUIs;
-        [SerializeField] private FloatingTextUI floatingTextUI;
+        [SerializeField] private FloatingTextUI floatingTextUIPrefab;
 
         public FloatingTextUI GetFloatingTextUI()
         {
