@@ -13,6 +13,11 @@ namespace NumGates.TestBattle
         [SerializeField] protected PrimaryStatus characterPrimaryStatus;
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
+        [Header("UI Script")]
+        [SerializeField] protected FloatingTextUI floatingTextUI;
+
+        private TimerManager timerManager;
+
         private void Awake()
         {
 
@@ -20,24 +25,37 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            InitCharacter();
+            //InitCharacter();
         }
 
-        private void InitCharacter()
+        public void InitCharacter(TimerManager timerManager)
         {
-            InitAction();
+            this.timerManager = timerManager;
+
+            InitTimerAction();
             InitStatus();
         }
 
-        private void InitAction()
+        private void InitTimerAction()
         {
-            TimerManager.OnInitTimer += InitTimer;
-            TimerManager.OnStartTimer += StartTimer;
-            TimerManager.OnUpdateTimer += UpdateTimer;
-            TimerManager.OnPauseTimer += PauseTimer;
-            TimerManager.OnResumeTimer += ResumeTimer;
-            TimerManager.OnStopTimer += StopTimer;
-            TimerManager.OnResetTimer += ResetTimer;
+            timerManager.OnInitTimer += InitTimer;
+            timerManager.OnStartTimer += StartTimer;
+            timerManager.OnUpdateTimer += UpdateTimer;
+            timerManager.OnPauseTimer += PauseTimer;
+            timerManager.OnResumeTimer += ResumeTimer;
+            timerManager.OnStopTimer += StopTimer;
+            timerManager.OnResetTimer += ResetTimer;
+        }
+
+        private void RemoveTimerAction()
+        {
+            timerManager.OnInitTimer -= InitTimer;
+            timerManager.OnStartTimer -= StartTimer;
+            timerManager.OnUpdateTimer -= UpdateTimer;
+            timerManager.OnPauseTimer -= PauseTimer;
+            timerManager.OnResumeTimer -= ResumeTimer;
+            timerManager.OnStopTimer -= StopTimer;
+            timerManager.OnResetTimer -= ResetTimer;
         }
 
         protected virtual void InitStatus()
@@ -77,12 +95,12 @@ namespace NumGates.TestBattle
 
         public void UpdateTimer()
         {
-            Debug.Log($"Update [{this.name}] Timer ");
+            //Debug.Log($"Update [{this.name}] Timer ");
 
-            if(isTimerUpdate)
+            if (isTimerUpdate)
             {
                 tick++;
-                Debug.Log($"[{this.name}] Tick: {tick}");
+                //Debug.Log($"[{this.name}] Tick: {tick}");
 
                 if (tick >= characterStatus.secondaryStatus.timer)
                 {
@@ -116,9 +134,21 @@ namespace NumGates.TestBattle
         }
         #endregion
 
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
+
+        public void SetFlipX(bool isFlip)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = isFlip;
+        }
+
         private IEnumerator Attack()
         {
             Debug.LogWarning($"[{this.name}] Attack");
+
+            FloatingTextUI.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 1f, 2f, 1f, Color.white);
 
             StopTimer();
 
