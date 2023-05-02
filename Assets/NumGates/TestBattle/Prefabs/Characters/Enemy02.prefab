@@ -73,6 +73,7 @@ MonoBehaviour:
     healingEffect: 0
     buffEffect: 0
     debuffEffect: 0
+  floatingTextUI: {fileID: 5943792121072623789, guid: c83080a42606ba4448d0b205402b4568, type: 3}
   statusMultiplier: 2
 --- !u!1 &8658088195364862646
 GameObject:

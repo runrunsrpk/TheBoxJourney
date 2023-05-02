@@ -13,6 +13,9 @@ namespace NumGates.TestBattle
         [SerializeField] protected PrimaryStatus characterPrimaryStatus;
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
+        [Header("UI Script")]
+        [SerializeField] protected FloatingTextUI floatingTextUI;
+
         private TimerManager timerManager;
 
         private void Awake()
@@ -92,12 +95,12 @@ namespace NumGates.TestBattle
 
         public void UpdateTimer()
         {
-            Debug.Log($"Update [{this.name}] Timer ");
+            //Debug.Log($"Update [{this.name}] Timer ");
 
             if (isTimerUpdate)
             {
                 tick++;
-                Debug.Log($"[{this.name}] Tick: {tick}");
+                //Debug.Log($"[{this.name}] Tick: {tick}");
 
                 if (tick >= characterStatus.secondaryStatus.timer)
                 {
@@ -144,6 +147,8 @@ namespace NumGates.TestBattle
         private IEnumerator Attack()
         {
             Debug.LogWarning($"[{this.name}] Attack");
+
+            FloatingTextUI.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 1f, 2f, 1f, Color.white);
 
             StopTimer();
 
