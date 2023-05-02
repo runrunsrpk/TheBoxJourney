@@ -1,61 +1,85 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using NumGates.TestBattle;
+using DG.Tweening;
 
 namespace NumGates
 {
     public class FloatingTextUI : MonoBehaviour
     {
         [SerializeField] TextMeshPro textMeshPro;
+        [SerializeField] float fadingTime = 1f;
 
         private string text;
         private Vector3 origin;
         private Vector3 direction;
+        private float distance;
         private float speed;
         private float duration;
+        private Color color;
 
-        public static FloatingTextUI Create(string text, Vector3 origin, Vector3 direction, float speed, float duration)
+        // Create FloatingText with customize setup
+        public static FloatingTextUI Create(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
             FloatingTextUI floatingText = Instantiate(UIManager.instance.GetFloatingTextUI());
-            floatingText.StartFloating(text, origin, direction, speed, duration);
+            floatingText.StartFloating(text, origin, direction, distance, speed, duration, color);
 
             return floatingText;
         }
 
-        public void StartFloating(string text, Vector3 origin, Vector3 direction, float speed, float duration)
+        public void StartFloating(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
             this.text = text;
             this.origin = origin;
             this.direction = direction;
+            this.distance = distance;
             this.speed = speed;
             this.duration = duration;
+            this.color = color;
 
-            StartCoroutine(OnStartFloating());
+            StartCoroutine(StartFloating(StopFloating));
         }
 
-        private IEnumerator OnStartFloating()
+        private IEnumerator StartFloating(Action<bool> callback)
         {
             gameObject.SetActive(true);
 
             textMeshPro.text = text;
+            textMeshPro.color = color;
 
             transform.position = origin;
-            transform.Translate(direction * speed * Time.deltaTime);
-
+            transform.DOMove(origin + (direction * distance), duration / speed);
+         
             yield return new WaitForSecondsRealtime(duration);
 
-            Destroy(gameObject);
-            //StopFloating();
+            callback(true);
         }
 
-        private void StopFloating()
+        private void StopFloating(bool isFinished)
         {
-            gameObject.SetActive(false);
+            if(isFinished)
+            {
+                StartCoroutine(StopFloating(DestroyFloating));
+            }
+        }
 
-            transform.Translate(Vector3.zero);
-            transform.position = Vector3.zero;
+        private IEnumerator StopFloating(Action<bool> callback)
+        {
+            textMeshPro.DOFade(0f, fadingTime);
+
+            yield return new WaitForSecondsRealtime(fadingTime);
+
+            callback(true);
+        }
+
+        private void DestroyFloating(bool isFinished)
+        {
+            if (isFinished)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
