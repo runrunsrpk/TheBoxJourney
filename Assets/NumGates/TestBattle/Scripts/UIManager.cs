@@ -7,16 +7,28 @@ namespace NumGates.TestBattle
 {
     public class UIManager : MonoBehaviour
     {
+        public static UIManager instance { get; private set; }
+
+        private void Awake()
+        {
+            // If there is an instance, and it's not me, delete myself.
+
+            if (instance != null && instance != this)
+            {
+                Destroy(this);
+            }
+
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+
         // TODO: Create object pooling function
 
-        [SerializeField] private List<FloatingTextUI> floatingTextUIs;
         [SerializeField] private FloatingTextUI floatingTextUIPrefab;
 
         public FloatingTextUI GetFloatingTextUI()
         {
-            FloatingTextUI floatingText = null;
-
-            return floatingText;
+            return floatingTextUIPrefab;
         }
 
         //public void SpawnFloatingText()

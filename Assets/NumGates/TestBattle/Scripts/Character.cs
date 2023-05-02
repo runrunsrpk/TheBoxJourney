@@ -148,8 +148,7 @@ namespace NumGates.TestBattle
         {
             Debug.LogWarning($"[{this.name}] Attack");
 
-            FloatingTextUI floatingText = Instantiate(floatingTextUI);
-            floatingText.StartFloating($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up,2f, 5f);
+            FloatingTextUI.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 2f, 1f);
 
             StopTimer();
 
