@@ -10,9 +10,10 @@ namespace NumGates
     {
         [SerializeField] private Slider slider;
 
-        //private float width;
-        //private float height;
+        private float smoothTime = 0.3f;
+        private float velocity = 0.0f;
         private float maxTimer;
+        private float targetTimer;
 
         // Create UITimerGauge with customize setup
         public static UITimerGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxTimer)
@@ -34,7 +35,13 @@ namespace NumGates
 
         public void UpdateTimer(float timer)
         {
-            slider.value = timer/maxTimer;
+            targetTimer = timer / maxTimer;
+        }
+
+        private void Update()
+        {
+            float currentTimer = Mathf.SmoothDamp(slider.value, targetTimer, ref velocity, smoothTime);
+            slider.value = currentTimer;
         }
     }
 

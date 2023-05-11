@@ -138,6 +138,7 @@ namespace NumGates.TestBattle
         {
             Debug.Log($"Reset [{this.name}] Timer ");
             tick = 0;
+            uiTimerGauge.UpdateTimer(tick);
         }
         #endregion
 
