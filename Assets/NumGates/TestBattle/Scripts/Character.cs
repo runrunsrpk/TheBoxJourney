@@ -14,6 +14,7 @@ namespace NumGates.TestBattle
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
         private UITimerGauge uiTimerGauge;
+        private UIHealthGauge uiHealthGauge;
 
         private TimerManager timerManager;
 
@@ -80,6 +81,7 @@ namespace NumGates.TestBattle
         protected virtual void InitUIs()
         {
             uiTimerGauge = UITimerGauge.Create(transform.position, Vector3.down, 25, 10, characterSecondaryStatus.timer);
+            uiHealthGauge = UIHealthGauge.Create(transform.position, Vector3.down / 2f, 25, 10, characterSecondaryStatus.health);
         }
 
         #region ITimer
@@ -154,11 +156,13 @@ namespace NumGates.TestBattle
 
         private IEnumerator Attack()
         {
+            StopTimer();
+
             Debug.LogWarning($"[{this.name}] Attack");
 
             UIFloatingText.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 0.5f, 2f, 1f, Color.white);
 
-            StopTimer();
+            uiHealthGauge.UpdateHealth(characterSecondaryStatus.physicalAttack);
 
             yield return new WaitForSecondsRealtime(1f);
 
