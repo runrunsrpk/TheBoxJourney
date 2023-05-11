@@ -12,6 +12,9 @@ namespace NumGates.TestBattle
 
     public class BattleManager : MonoBehaviour
     {
+        private GameObject allyParent;
+        private GameObject enemyParent;
+
         private List<Ally> allies;
         private List<Enemy> enemies;
 
@@ -20,6 +23,18 @@ namespace NumGates.TestBattle
         public void InitBattle(TimerManager timerManager)
         {
             this.timerManager = timerManager;
+
+            if(allyParent == null)
+            {
+                allyParent = new GameObject("AllyParent");
+                allyParent.transform.parent = transform;
+            }
+            
+            if(enemyParent == null)
+            {
+                enemyParent = new GameObject("EnemyParent");
+                enemyParent.transform.parent = transform;
+            }
         }
 
         // Bypass InitCharacter from LevelManager
@@ -48,6 +63,45 @@ namespace NumGates.TestBattle
                 tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
                 tempAlly.SetFlipX(true);
                 tempAlly.InitCharacter(timerManager);
+                tempAlly.InitCharacter(timerManager);
+            }
+        }
+
+        // Bypass InitCharacter from LevelManager 2
+        public void InitCharacter(List<CharacterAlly> allies, List<CharacterEnemy> enemies)
+        {
+            List<Enemy> tempEnemies = new List<Enemy>();
+            foreach(CharacterEnemy enemy in enemies)
+            {
+                tempEnemies.Add(AssetManager.instance.GetEnemyCharacter(enemy).GetComponent<Enemy>());
+            }
+
+            this.enemies = tempEnemies;
+            int enemyIndex = 0;
+
+            foreach (Enemy enemy in this.enemies)
+            {
+                enemyIndex++;
+                Enemy tempEnemy = Instantiate(enemy, enemyParent.transform);
+                tempEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
+                tempEnemy.InitCharacter(timerManager);
+            }
+
+            List<Ally> tempAllies = new List<Ally>();
+            foreach (CharacterAlly ally in allies)
+            {
+                tempAllies.Add(AssetManager.instance.GetAllyCharacter(ally).GetComponent<Ally>());
+            }
+
+            this.allies = tempAllies;
+            int allyIndex = 0;
+
+            foreach (Ally ally in this.allies)
+            {
+                allyIndex++;
+                Ally tempAlly = Instantiate(ally, allyParent.transform);
+                tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
+                tempAlly.SetFlipX(true);
                 tempAlly.InitCharacter(timerManager);
             }
         }
@@ -96,11 +150,53 @@ namespace NumGates.TestBattle
             switch (group)
             {
                 case BattleGroup.Ally:
-                    allies.RemoveAt(position);
-                    break;
+                    {
+                        DestroyCharacter(allyParent.transform, position);
+                        allies.RemoveAt(position);
+                        break;
+                    }
+                    
                 case BattleGroup.Enemy:
-                    enemies.RemoveAt(position);
-                    break;
+                    {
+                        DestroyCharacter(enemyParent.transform, position);
+                        enemies.RemoveAt(position);
+                        break;
+                    }
+                    
+            }
+        }
+
+        public void RemoveAllCharacters(BattleGroup group)
+        {
+            switch (group)
+            {
+                case BattleGroup.Ally:
+                    {
+                        DestroyAllCharacters(allyParent.transform);
+                        allies.Clear();
+                        break;
+                    }
+
+                case BattleGroup.Enemy:
+                    {
+                        DestroyAllCharacters(enemyParent.transform);
+                        enemies.Clear();
+                        break;
+                    }
+
+            }
+        }
+
+        private void DestroyCharacter(Transform parent, int position)
+        {
+            Destroy(parent.GetChild(position - 1));
+        }
+
+        private void DestroyAllCharacters(Transform parent)
+        {
+            foreach(Transform child in parent)
+            {
+                Destroy(child.gameObject);
             }
         }
 

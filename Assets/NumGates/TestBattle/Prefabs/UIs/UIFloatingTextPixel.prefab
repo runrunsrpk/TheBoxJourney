@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 505024882602515354}
   - component: {fileID: 3094127577490488037}
   m_Layer: 0
-  m_Name: FloatingTextPixel
+  m_Name: UIFloatingTextPixel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

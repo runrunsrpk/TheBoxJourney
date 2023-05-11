@@ -7,7 +7,13 @@ namespace NumGates.TestBattle
 {
     public class UIManager : MonoBehaviour
     {
+        // TODO: Change UIManager instance to AssetManager script
         public static UIManager instance { get; private set; }
+
+        [SerializeField] private UIBattleEvent uiBattleEventPrefab;        
+        [SerializeField] private UIFloatingText uiFloatingTextPrefab;
+
+        private UIBattleEvent uiBattleEvent;
 
         private void Awake()
         {
@@ -22,20 +28,21 @@ namespace NumGates.TestBattle
             DontDestroyOnLoad(instance);
         }
 
-        // TODO: Create object pooling function
-
-        [SerializeField] private FloatingTextUI floatingTextUIPrefab;
-
-        public FloatingTextUI GetFloatingTextUI()
+        public void InitManager(LevelManager levelManager)
         {
-            return floatingTextUIPrefab;
+            if(uiBattleEvent == null)
+            {
+                uiBattleEvent = Instantiate(uiBattleEventPrefab);
+                uiBattleEvent.InitUIBattle(levelManager);
+            }
+            
         }
 
-        //public void SpawnFloatingText()
-        //{
-        //    FloatingTextUI floatingText = Instantiate(floatingTextUI);
-        //    floatingText.StartFloating();
-        //}
+        // TODO: Create object pooling function
+        public UIFloatingText GetFloatingTextUI()
+        {
+            return uiFloatingTextPrefab;
+        }
     }
 }
 

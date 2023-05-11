@@ -8,11 +8,11 @@ namespace NumGates.TestBattle
     {
         public static GameManager instance { get; private set; }
 
-        [SerializeField] private LevelManager levelManager;
-        [SerializeField] private UIManager uiManager;
+        [SerializeField] private LevelManager levelManagerPrefab;
+        [SerializeField] private UIManager uiManagerPrefab;
 
-        private LevelManager tempLevelManager;
-        private UIManager tempUIManager;
+        private LevelManager levelManager;
+        private UIManager uiManager;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            InitManager();
+            InitAssets();
         }
 
         private void Update()
@@ -37,23 +37,41 @@ namespace NumGates.TestBattle
             
         }
 
+        private void InitAssets()
+        {
+            Debug.Log($"GameManage 'InitAsset'");
+
+            AssetManager.instance.OnLoadComplete += OnLoadComplete;
+
+            StartCoroutine(AssetManager.instance.InitAssets());
+        }
+
+        private void OnLoadComplete()
+        {
+            InitManager();
+        }
+
         private void InitManager()
         {
-            if(IsAvailableInstanstitate(levelManager, tempLevelManager))
+            Debug.Log($"GameManage 'InitManager'");
+
+            if(IsAvailableInstanstitate(levelManagerPrefab, levelManager))
             {
-                tempLevelManager = Instantiate(levelManager, transform);
-                tempLevelManager.InitManager();
+                levelManager = Instantiate(levelManagerPrefab, transform);
+                levelManager.InitManager();
             }
 
-            if(IsAvailableInstanstitate(uiManager, tempUIManager))
+            if(IsAvailableInstanstitate(uiManagerPrefab, uiManager))
             {
-                tempUIManager = Instantiate(uiManager, transform);
+                //uiManager = Instantiate(uiManagerPrefab, transform);
+                uiManager = uiManagerPrefab;
+                uiManager.InitManager(levelManager);
             }
         }
 
-        private bool IsAvailableInstanstitate<T>(T manager, T tempManager)
+        private bool IsAvailableInstanstitate<T>(T managerPrefab, T manager)
         {
-            return manager != null && tempManager == null;
+            return managerPrefab != null && manager == null;
         }
     }
 }

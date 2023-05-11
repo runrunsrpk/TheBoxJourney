@@ -7,7 +7,7 @@ using DG.Tweening;
 
 namespace NumGates
 {
-    public class FloatingTextUI : MonoBehaviour
+    public class UIFloatingText : MonoBehaviour
     {
         [SerializeField] TextMeshPro textMeshPro;
         [SerializeField] float fadingTime = 1f;
@@ -21,9 +21,10 @@ namespace NumGates
         private Color color;
 
         // Create FloatingText with customize setup
-        public static FloatingTextUI Create(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
+        public static UIFloatingText Create(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
-            FloatingTextUI floatingText = Instantiate(UIManager.instance.GetFloatingTextUI());
+            //UIFloatingText floatingText = Instantiate(UIManager.instance.GetFloatingTextUI());
+            UIFloatingText floatingText = Instantiate(AssetManager.instance.GetUIFloatingText());
             floatingText.StartFloating(text, origin, direction, distance, speed, duration, color);
 
             return floatingText;

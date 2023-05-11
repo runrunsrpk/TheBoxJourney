@@ -14,7 +14,7 @@ namespace NumGates.TestBattle
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
         [Header("UI Script")]
-        [SerializeField] protected FloatingTextUI floatingTextUI;
+        [SerializeField] protected UIFloatingText floatingTextUI;
 
         private TimerManager timerManager;
 
@@ -148,7 +148,7 @@ namespace NumGates.TestBattle
         {
             Debug.LogWarning($"[{this.name}] Attack");
 
-            FloatingTextUI.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 1f, 2f, 1f, Color.white);
+            UIFloatingText.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 0.5f, 2f, 1f, Color.white);
 
             StopTimer();
 

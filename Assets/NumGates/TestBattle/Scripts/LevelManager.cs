@@ -4,16 +4,25 @@ using UnityEngine;
 
 namespace NumGates.TestBattle
 {
+    public enum LevelEvent
+    {
+        Battle,
+        Trap
+    }
+
     public class LevelManager : MonoBehaviour
     {
         [SerializeField] private List<Ally> allies;
         [SerializeField] private List<Enemy> enemies;
 
-        [SerializeField] private TimerManager timerManager;
-        [SerializeField] private BattleManager battleManager;
+        [SerializeField] private List<CharacterAlly> characterAllies;
+        [SerializeField] private List<CharacterEnemy> characterEnemies;
 
-        private TimerManager tempTimer;
-        private BattleManager tempBattle;
+        [SerializeField] private TimerManager timerManagerPrefab;
+        [SerializeField] private BattleManager battleManagerPrefab;
+
+        private TimerManager timerManager;
+        private BattleManager battleManager;
 
         private void Awake()
         {
@@ -27,10 +36,10 @@ namespace NumGates.TestBattle
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                tempTimer.StartTimer();
-            }
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    timerManager.StartTimer();
+            //}
 
             //if (Input.GetKeyDown(KeyCode.A))
             //{
@@ -40,24 +49,54 @@ namespace NumGates.TestBattle
 
         public void InitManager()
         {
-            if(tempTimer == null)
+            if(timerManager == null)
             {
-                tempTimer = Instantiate(timerManager, transform);
-                tempTimer.InitTimer();
+                timerManager = Instantiate(timerManagerPrefab, transform);
+                timerManager.InitTimer();
             }
 
-            if(tempBattle == null)
+            if(battleManager == null)
             {
-                tempBattle = Instantiate(battleManager, transform);
-                tempBattle.InitBattle(tempTimer);
-                tempBattle.InitCharacter(allies, enemies);
+                battleManager = Instantiate(battleManagerPrefab, transform);
+                battleManager.InitBattle(timerManager);
+                //battleManager.InitCharacter(allies, enemies);
+                battleManager.InitCharacter(characterAllies, characterEnemies);
             }
+        }
+
+        public void StartEvent(LevelEvent levelEvent)
+        {
+            switch(levelEvent)
+            {
+                case LevelEvent.Battle:
+                    {
+                        timerManager.StartTimer();
+                        break;
+                    }
+            }
+        }
+
+        public void StartTestBattle()
+        {
+            timerManager.StartTimer();
+        }
+
+        public void StopTestBattle()
+        {
+            timerManager.StopTimer();
+            timerManager.ResetTimer();
+        }
+
+        public void ResetTestBattle()
+        {
+            battleManager.RemoveAllCharacters(BattleGroup.Ally);
+            battleManager.RemoveAllCharacters(BattleGroup.Enemy);
         }
 
         public void DestroyManager()
         {
-            Destroy(tempTimer.gameObject);
-            Destroy(tempBattle.gameObject);
+            Destroy(timerManager.gameObject);
+            Destroy(battleManager.gameObject);
         }
     }
 }
