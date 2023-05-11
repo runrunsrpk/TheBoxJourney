@@ -23,14 +23,14 @@ namespace NumGates
         // Create FloatingText with customize setup
         public static UIFloatingText Create(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
-            //UIFloatingText floatingText = Instantiate(UIManager.instance.GetFloatingTextUI());
             UIFloatingText floatingText = Instantiate(AssetManager.instance.GetUIFloatingText());
-            floatingText.StartFloating(text, origin, direction, distance, speed, duration, color);
+            floatingText.InitFloating(text, origin, direction, distance, speed, duration, color);
+            floatingText.StartFloating();
 
             return floatingText;
         }
 
-        public void StartFloating(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
+        private void InitFloating(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
             this.text = text;
             this.origin = origin;
@@ -39,7 +39,10 @@ namespace NumGates
             this.speed = speed;
             this.duration = duration;
             this.color = color;
+        }
 
+        private void StartFloating()
+        {
             StartCoroutine(StartFloating(StopFloating));
         }
 

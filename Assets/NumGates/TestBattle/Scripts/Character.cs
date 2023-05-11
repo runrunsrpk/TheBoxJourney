@@ -13,8 +13,7 @@ namespace NumGates.TestBattle
         [SerializeField] protected PrimaryStatus characterPrimaryStatus;
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
 
-        [Header("UI Script")]
-        [SerializeField] protected UIFloatingText floatingTextUI;
+        private UITimerGauge uiTimerGauge;
 
         private TimerManager timerManager;
 
@@ -34,6 +33,7 @@ namespace NumGates.TestBattle
 
             InitTimerAction();
             InitStatus();
+            InitUIs();
         }
 
         private void InitTimerAction()
@@ -77,6 +77,11 @@ namespace NumGates.TestBattle
             //    $"Acc[{characterStatus.secondaryStatus.baseAccuracy}], ");
         }
 
+        protected virtual void InitUIs()
+        {
+            uiTimerGauge = UITimerGauge.Create(transform.position, Vector3.down, 25, 10, characterSecondaryStatus.timer);
+        }
+
         #region ITimer
         private bool isTimerUpdate;
         private int tick;
@@ -100,10 +105,12 @@ namespace NumGates.TestBattle
             if (isTimerUpdate)
             {
                 tick++;
+                uiTimerGauge.UpdateTimer(tick);
                 //Debug.Log($"[{this.name}] Tick: {tick}");
 
                 if (tick >= characterStatus.secondaryStatus.timer)
                 {
+                    uiTimerGauge.UpdateTimer(0);
                     StartCoroutine(Attack());
                 }
             }

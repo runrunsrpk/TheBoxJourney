@@ -66,8 +66,9 @@ namespace NumGates.TestBattle
 
         #region UI Asset
 
-        public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(uiFloatingText.AssetGUID).GetComponent<UIFloatingText>();
-        public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(uiBattleEvent.AssetGUID).GetComponent<UIBattleEvent>();
+        public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(UIReference.UIFloatingText).GetComponent<UIFloatingText>();
+        public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
+        public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
 
         #endregion
 
