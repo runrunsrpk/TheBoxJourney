@@ -12,11 +12,18 @@ namespace NumGates.TestBattle
         // For set and show value in inspector //
         [SerializeField] protected PrimaryStatus characterPrimaryStatus;
         [SerializeField] protected SecondaryStatus characterSecondaryStatus;
+        [SerializeField] protected PrimaryStatus characterCurrentPrimaryStatus;
+        [SerializeField] protected SecondaryStatus characterCurrentSecondaryStatus;
+
+        [Header("Battle Script")]
+        [SerializeField] protected BattleGroup targetGroup;
+        [SerializeField] protected List<int> targets;
 
         private UITimerGauge uiTimerGauge;
         private UIHealthGauge uiHealthGauge;
 
         private TimerManager timerManager;
+        private BattleManager battleManager;
 
         private void Awake()
         {
@@ -28,9 +35,10 @@ namespace NumGates.TestBattle
             //InitCharacter();
         }
 
-        public void InitCharacter(TimerManager timerManager)
+        public void InitCharacter(TimerManager timerManager, BattleManager battleManager)
         {
             this.timerManager = timerManager;
+            this.battleManager = battleManager;
 
             InitTimerAction();
             InitStatus();
@@ -80,8 +88,8 @@ namespace NumGates.TestBattle
 
         protected virtual void InitUIs()
         {
-            uiTimerGauge = UITimerGauge.Create(transform.position, new Vector3(0.0f, -1.2f, 0.0f), 48, 24, characterSecondaryStatus.timer);
-            uiHealthGauge = UIHealthGauge.Create(transform.position, new Vector3(0.0f, -0.8f, 0.0f), 48, 24, characterSecondaryStatus.health);
+            uiTimerGauge = UITimerGauge.Create(transform.position, new Vector3(0.0f, -1.2f, 0.0f), 48, 24, characterSecondaryStatus.timer, transform);
+            uiHealthGauge = UIHealthGauge.Create(transform.position, new Vector3(0.0f, -0.8f, 0.0f), 48, 24, characterSecondaryStatus.health, transform);
         }
 
         #region ITimer
@@ -113,7 +121,7 @@ namespace NumGates.TestBattle
                 if (tick >= characterStatus.secondaryStatus.timer)
                 {
                     uiTimerGauge.UpdateTimer(0);
-                    StartCoroutine(Attack());
+                    StartCoroutine(OnAttack());
                 }
             }
         }
@@ -154,21 +162,69 @@ namespace NumGates.TestBattle
             transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = isFlip;
         }
 
-        private IEnumerator Attack()
+        // TODO: Move to each children class
+
+        #region Character Action
+
+        public void Hit(int damage)
+        {
+            StartCoroutine(OnHit(damage));
+        }
+
+        private IEnumerator OnAttack()
         {
             StopTimer();
 
             Debug.LogWarning($"[{this.name}] Attack");
 
-            UIFloatingText.Create($"{characterSecondaryStatus.physicalAttack}", transform.position, Vector3.up, 0.5f, 2f, 1f, Color.white);
-
-            uiHealthGauge.UpdateHealth(characterSecondaryStatus.physicalAttack);
+            battleManager.NormalAttackOnTarget(targetGroup, targets, Mathf.RoundToInt(characterSecondaryStatus.physicalAttack));
 
             yield return new WaitForSecondsRealtime(1f);
 
             ResetTimer();
             StartTimer();
         }
+
+        private IEnumerator OnHit(int damage)
+        {
+            StopTimer();
+
+            UIFloatingText.Create($"{damage}", transform.position, Vector3.up, 0.5f, 2f, 1f, Color.white);
+
+            // TODO: Change to use action
+            uiHealthGauge.UpdateHealth(damage);
+
+            if(characterCurrentSecondaryStatus.health - damage > 0)
+            {
+                characterCurrentSecondaryStatus.health -= damage;
+
+                yield return new WaitForSecondsRealtime(1f);
+
+                StartTimer();
+            }
+            else
+            {
+                characterCurrentSecondaryStatus.health = 0;
+
+                yield return OnDead();
+            }
+        }
+
+        private IEnumerator OnDead()
+        {
+            // TODO: Call action to battle manager when character die (switch position)
+
+            yield return new WaitForSecondsRealtime(1f);
+
+            ResetTimer();
+            RemoveTimerAction();
+
+            yield return new WaitForSecondsRealtime(1f);
+
+            Destroy(gameObject);
+        }
+
+        #endregion
     }
 }
 

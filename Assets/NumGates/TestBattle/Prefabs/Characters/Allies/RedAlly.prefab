@@ -157,3 +157,5 @@ MonoBehaviour:
     healingEffect: 0
     buffEffect: 0
     debuffEffect: 0
+  targetGroup: 1
+  targets: 0000000001000000

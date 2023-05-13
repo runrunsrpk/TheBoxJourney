@@ -16,9 +16,9 @@ namespace NumGates
         private float targetTimer;
 
         // Create UITimerGauge with customize setup
-        public static UITimerGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxTimer)
+        public static UITimerGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxTimer, Transform parent)
         {
-            UITimerGauge timerGauge = Instantiate(AssetManager.instance.GetUITimerGauge());
+            UITimerGauge timerGauge = Instantiate(AssetManager.instance.GetUITimerGauge(), parent);
 
             timerGauge.InitTimerGauge(origin, offset, width, height, maxTimer);
 

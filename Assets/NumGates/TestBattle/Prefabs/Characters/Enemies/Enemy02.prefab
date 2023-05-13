@@ -73,6 +73,8 @@ MonoBehaviour:
     healingEffect: 0
     buffEffect: 0
     debuffEffect: 0
+  targetGroup: 0
+  targets: 00000000
   statusMultiplier: 2
 --- !u!1 &8658088195364862646
 GameObject:

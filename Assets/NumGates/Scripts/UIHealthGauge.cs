@@ -20,9 +20,9 @@ namespace NumGates
         private float targetHealth;
 
         // Create UITimerGauge with customize setup
-        public static UIHealthGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxHealth)
+        public static UIHealthGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxHealth, Transform parent)
         {
-            UIHealthGauge healthGauge = Instantiate(AssetManager.instance.GetUIHealthGauge());
+            UIHealthGauge healthGauge = Instantiate(AssetManager.instance.GetUIHealthGauge(), parent);
 
             healthGauge.InitHealthGauge(origin, offset, width, height, maxHealth);
 
@@ -45,10 +45,10 @@ namespace NumGates
 
         public void UpdateHealth(float damage)
         {
-            currentHealth -= damage;
+            currentHealth = (currentHealth - damage > 0) ? currentHealth - damage : 0;
             targetHealth = currentHealth / maxHealth;
 
-            Debug.Log($"Current: {slider.value} / Target: {targetHealth}");
+            Debug.Log($"Damage: {damage} / Health: {currentHealth} / Current: {slider.value} / Target: {targetHealth}");
 
             healthText.text = $"{currentHealth}";
         }

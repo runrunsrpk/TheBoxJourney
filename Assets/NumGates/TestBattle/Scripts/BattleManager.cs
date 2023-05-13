@@ -18,6 +18,8 @@ namespace NumGates.TestBattle
         private List<Ally> allies;
         private List<Enemy> enemies;
 
+        private List<GameObject> alliesObject;
+
         private TimerManager timerManager;
 
         public void InitBattle(TimerManager timerManager)
@@ -37,6 +39,8 @@ namespace NumGates.TestBattle
             }
         }
 
+        #region Character Management
+
         // Bypass InitCharacter from LevelManager
         public void InitCharacter(List<Ally> allies, List<Enemy> enemies)
         {
@@ -50,7 +54,7 @@ namespace NumGates.TestBattle
                 Debug.Log($"{enemy.name} Index {enemyIndex}");
                 Enemy tempEnemy = Instantiate(enemy);
                 tempEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
-                tempEnemy.InitCharacter(timerManager);
+                tempEnemy.InitCharacter(timerManager, this);
             }
 
             this.allies = allies;
@@ -62,47 +66,41 @@ namespace NumGates.TestBattle
                 Ally tempAlly = Instantiate(ally);
                 tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
                 tempAlly.SetFlipX(true);
-                tempAlly.InitCharacter(timerManager);
-                tempAlly.InitCharacter(timerManager);
+                tempAlly.InitCharacter(timerManager, this);
+                tempAlly.InitCharacter(timerManager, this);
             }
         }
 
         // Bypass InitCharacter from LevelManager 2
         public void InitCharacter(List<CharacterAlly> allies, List<CharacterEnemy> enemies)
         {
-            List<Enemy> tempEnemies = new List<Enemy>();
-            foreach(CharacterEnemy enemy in enemies)
-            {
-                tempEnemies.Add(AssetManager.instance.GetEnemyCharacter(enemy).GetComponent<Enemy>());
-            }
-
-            this.enemies = tempEnemies;
             int enemyIndex = 0;
+            this.enemies = new List<Enemy>();
 
-            foreach (Enemy enemy in this.enemies)
+            foreach (CharacterEnemy enemy in enemies)
             {
                 enemyIndex++;
-                Enemy tempEnemy = Instantiate(enemy, enemyParent.transform);
-                tempEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
-                tempEnemy.InitCharacter(timerManager);
+
+                Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy).GetComponent<Enemy>(), enemyParent.transform);
+                spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
+                spawnedEnemy.InitCharacter(timerManager, this);
+
+                this.enemies.Add(spawnedEnemy);
             }
 
-            List<Ally> tempAllies = new List<Ally>();
+            int allyIndex = 0;
+            this.allies = new List<Ally>();
+
             foreach (CharacterAlly ally in allies)
             {
-                tempAllies.Add(AssetManager.instance.GetAllyCharacter(ally).GetComponent<Ally>());
-            }
-
-            this.allies = tempAllies;
-            int allyIndex = 0;
-
-            foreach (Ally ally in this.allies)
-            {
                 allyIndex++;
-                Ally tempAlly = Instantiate(ally, allyParent.transform);
-                tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
-                tempAlly.SetFlipX(true);
-                tempAlly.InitCharacter(timerManager);
+
+                Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally).GetComponent<Ally>(), allyParent.transform);
+                spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
+                spawnedAlly.SetFlipX(true);
+                spawnedAlly.InitCharacter(timerManager, this);
+
+                this.allies.Add(spawnedAlly);
             }
         }
 
@@ -110,12 +108,12 @@ namespace NumGates.TestBattle
         {
             foreach (Enemy enemy in enemies)
             {
-                enemy.InitCharacter(timerManager);
+                enemy.InitCharacter(timerManager, this);
             }
 
             foreach (Ally ally in allies)
             {
-                ally.InitCharacter(timerManager);
+                ally.InitCharacter(timerManager, this);
             }
         }
 
@@ -208,6 +206,37 @@ namespace NumGates.TestBattle
         //        case BattleGroup.Enemy: break;
         //    }
         //}
+        #endregion
+
+        #region Character Action
+
+        public void NormalAttackOnTarget(BattleGroup group, List<int> targets, int damage)
+        {
+            switch (group)
+            {
+                case BattleGroup.Ally:
+                    {
+                        foreach(int target in targets)
+                        {
+                            allies[target].Hit(damage);
+                        }
+
+                        break;
+                    }
+
+                case BattleGroup.Enemy:
+                    {
+                        foreach (int target in targets)
+                        {
+                            enemies[target].Hit(damage);
+                        }
+
+                        break;
+                    }
+            }
+        }
+
+        #endregion
     }
 }
 
