@@ -80,8 +80,8 @@ namespace NumGates.TestBattle
 
         protected virtual void InitUIs()
         {
-            uiTimerGauge = UITimerGauge.Create(transform.position, Vector3.down, 25, 10, characterSecondaryStatus.timer);
-            uiHealthGauge = UIHealthGauge.Create(transform.position, Vector3.down / 2f, 25, 10, characterSecondaryStatus.health);
+            uiTimerGauge = UITimerGauge.Create(transform.position, new Vector3(0.0f, -1.2f, 0.0f), 48, 24, characterSecondaryStatus.timer);
+            uiHealthGauge = UIHealthGauge.Create(transform.position, new Vector3(0.0f, -0.8f, 0.0f), 48, 24, characterSecondaryStatus.health);
         }
 
         #region ITimer

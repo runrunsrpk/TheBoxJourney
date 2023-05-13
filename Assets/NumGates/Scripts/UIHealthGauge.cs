@@ -40,7 +40,7 @@ namespace NumGates
             slider.value = 1f;
 
             healthText.transform.position = Camera.main.WorldToScreenPoint(origin + offset);
-            healthText.text = $"{maxHealth}/{maxHealth}";
+            healthText.text = $"{maxHealth}";
         }
 
         public void UpdateHealth(float damage)
@@ -50,7 +50,7 @@ namespace NumGates
 
             Debug.Log($"Current: {slider.value} / Target: {targetHealth}");
 
-            healthText.text = $"{currentHealth}/{maxHealth}";
+            healthText.text = $"{currentHealth}";
         }
 
         private void Update()

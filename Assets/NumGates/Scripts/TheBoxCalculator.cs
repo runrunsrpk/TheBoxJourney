@@ -9,9 +9,12 @@ namespace NumGates
     {
         #region Position Calculator
 
-        private const int min_character_amount = 5;
+        private const int min_character_amount = 6;
         private const int max_character_amount = 9;
-        private const float max_screen_horizontal = 4.5f;
+        private const float max_screen_horizontal = 9.6f;
+
+        private const int pixel_screen_width = 640;
+        private const int pixel_screen_height = 360;
 
         public static Vector3 GetCharacterPositionCenterPivot(int index, int amount, BattleGroup group)
         {
