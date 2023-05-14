@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace NumGates.TestBattle
 
     public class BattleManager : MonoBehaviour
     {
+        public Action<BattleGroup> OnChangeAllCharacterPositions;
+
         private GameObject allyParent;
         private GameObject enemyParent;
 
@@ -35,6 +38,18 @@ namespace NumGates.TestBattle
                 enemyParent = new GameObject("EnemyParent");
                 enemyParent.transform.parent = transform;
             }
+
+            InitAction();
+        }
+
+        private void InitAction()
+        {
+            OnChangeAllCharacterPositions += ChangeAllCharacterPositions;
+        }
+
+        private void RemoveAction()
+        {
+            OnChangeAllCharacterPositions -= ChangeAllCharacterPositions;
         }
 
         #region Character Management
@@ -104,14 +119,23 @@ namespace NumGates.TestBattle
             }
         }
 
-        private void ChangeCharacterIndex(BattleGroup group)
+        private void ChangeCharacterPosition(BattleGroup group)
         {
 
         }
 
-        private void ChangeAllCharactersIndex(BattleGroup group)
+        private void ChangeAllCharacterPositions(BattleGroup group)
         {
+            List<Character> characters = GetCharacterGroupList(group);
 
+            int positionIndex = 0;
+
+            foreach(Character character in characters)
+            {
+                positionIndex++;
+                Vector3 targetPosition = TheBoxCalculator.GetCharacterPositionFrontPivot(positionIndex, characters.Count, group);
+                character.SetMovePosition(targetPosition, 1f);
+            }
         }
 
         private int GetNearestCharacterPositionIndex(BattleGroup group, int position)
@@ -158,11 +182,12 @@ namespace NumGates.TestBattle
 
         #region Character Action
 
-        public void OnCharacterDead(BattleGroup group)
+        private void CharacterDead(BattleGroup group)
         {
             if (IsAllCharactersDead(group))
             {
                 Debug.LogWarning($"Game End");
+                timerManager.StopTimer();
             }
         }
 
@@ -174,20 +199,31 @@ namespace NumGates.TestBattle
             {
                 Character character = characters[target];
 
-                if(character.IsDead())
+                // TODO: Stop game from calling hit
+                if(!IsAllCharactersDead(group))
                 {
-                    if(group == BattleGroup.Ally)
+                    if (character.IsDead())
                     {
-                        character = characters[GetNearestCharacterPositionIndex(group, target)];
+                        if (group == BattleGroup.Ally)
+                        {
+                            character = characters[GetNearestCharacterPositionIndex(group, target)];
+                        }
+                        else
+                        {
+                            RemoveCharacter(group, target);
+                            character = characters[target];
+                        }
                     }
-                    else
+
+                    character.Hit(damage);
+
+                    // Recheck is charater dead after hit
+                    if (character.IsDead())
                     {
                         RemoveCharacter(group, target);
-                        character = characters[target];
+                        CharacterDead(group);
                     }
                 }
-
-                character.Hit(damage);
             }
         }
 

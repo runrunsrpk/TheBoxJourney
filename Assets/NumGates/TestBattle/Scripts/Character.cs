@@ -163,6 +163,14 @@ namespace NumGates.TestBattle
             transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = isFlip;
         }
 
+        public void SetMovePosition(Vector3 position, float duration)
+        {
+            MoveCharacter(position, duration);
+
+            uiHealthGauge.UpdatePosition(position, duration);
+            uiTimerGauge.UpdatePosition(position, duration);
+        }
+
         // TODO: Move to each children class
 
         #region Character Action
@@ -196,6 +204,12 @@ namespace NumGates.TestBattle
         protected void FadeCharacter()
         {
             characterSprite.DOFade(0f, fadeTime);
+        }
+
+        protected void MoveCharacter(Vector3 position, float duration)
+        {
+            // TODO: Change duration to move speed
+            transform.DOMove(position, duration);
         }
 
         private IEnumerator OnAttack()

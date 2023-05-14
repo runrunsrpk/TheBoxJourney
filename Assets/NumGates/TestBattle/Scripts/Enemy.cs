@@ -43,6 +43,7 @@ namespace NumGates.TestBattle
 
         protected override void DestroyCharacter()
         {
+            battleManager.OnChangeAllCharacterPositions(BattleGroup.Enemy);
             Destroy(gameObject);
         }
     }

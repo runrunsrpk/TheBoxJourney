@@ -4,6 +4,7 @@ using NumGates.TestBattle;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace NumGates
 {
@@ -11,6 +12,8 @@ namespace NumGates
     {
         [SerializeField] private Slider slider;
         [SerializeField] private TextMeshProUGUI healthText;
+
+        private Vector3 offset;
 
         private float smoothTime = 0.3f;
         private float velocity = 0.0f;
@@ -31,6 +34,8 @@ namespace NumGates
 
         private void InitHealthGauge(Vector3 origin, Vector3 offset, float width, float height, float maxHealth)
         {
+            this.offset = offset;
+
             this.maxHealth = maxHealth;
             currentHealth = maxHealth;
             targetHealth = 1f;
@@ -41,6 +46,13 @@ namespace NumGates
 
             healthText.transform.position = Camera.main.WorldToScreenPoint(origin + offset);
             healthText.text = $"{maxHealth}";
+        }
+
+        public void UpdatePosition(Vector3 position, float duration)
+        {
+            // TODO: Change duration to move speed
+            slider.transform.DOMove(Camera.main.WorldToScreenPoint(position + offset), duration);
+            healthText.transform.DOMove(Camera.main.WorldToScreenPoint(position + offset), duration);
         }
 
         public void UpdateHealth(float damage)
