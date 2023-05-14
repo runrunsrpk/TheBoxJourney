@@ -82,7 +82,7 @@ namespace NumGates.TestBattle
                 enemyIndex++;
 
                 Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy).GetComponent<Enemy>(), enemyParent.transform);
-                spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
+                spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, enemies.Count, BattleGroup.Enemy));
                 spawnedEnemy.InitCharacter(timerManager, this);
 
                 this.enemies.Add(spawnedEnemy);
@@ -96,7 +96,7 @@ namespace NumGates.TestBattle
                 allyIndex++;
 
                 Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally).GetComponent<Ally>(), allyParent.transform);
-                spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
+                spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
                 spawnedAlly.SetFlipX(true);
                 spawnedAlly.InitCharacter(timerManager, this);
 
@@ -198,6 +198,11 @@ namespace NumGates.TestBattle
             }
         }
 
+        private void SwitchCharacterIndex(BattleGroup group)
+        {
+
+        }
+
         //public void SwitchCharacter(BattleGroup group, int position1, int position2)
         //{
         //    switch (group)
@@ -236,6 +241,36 @@ namespace NumGates.TestBattle
             }
         }
 
+        public void SkillAttackOnTarget(BattleGroup group, List<int> targets)
+        {
+            switch (group)
+            {
+                case BattleGroup.Ally:
+                    {
+                        foreach (int target in targets)
+                        {
+                            //allies[target].Hit(damage);
+                        }
+
+                        break;
+                    }
+
+                case BattleGroup.Enemy:
+                    {
+                        foreach (int target in targets)
+                        {
+                            //enemies[target].Hit(damage);
+                        }
+
+                        break;
+                    }
+            }
+        }
+
+        private int GetNearestCharacter(int index)
+        {
+            return 0;
+        }
         #endregion
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace NumGates.TestBattle
 {
@@ -45,7 +46,7 @@ namespace NumGates.TestBattle
             InitUIs();
         }
 
-        private void InitTimerAction()
+        protected void InitTimerAction()
         {
             timerManager.OnInitTimer += InitTimer;
             timerManager.OnStartTimer += StartTimer;
@@ -56,7 +57,7 @@ namespace NumGates.TestBattle
             timerManager.OnResetTimer += ResetTimer;
         }
 
-        private void RemoveTimerAction()
+        protected void RemoveTimerAction()
         {
             timerManager.OnInitTimer -= InitTimer;
             timerManager.OnStartTimer -= StartTimer;
@@ -166,9 +167,35 @@ namespace NumGates.TestBattle
 
         #region Character Action
 
+        [Header("Character Sprite")]
+        [SerializeField] protected SpriteRenderer characterSprite;
+        [SerializeField] protected Color originColor;
+        [SerializeField] protected Color flashColor;
+        [SerializeField] protected float flashTime = 0.5f;
+        [SerializeField] protected float fadeTime = 1f;
+        [SerializeField] protected bool isFadeOnDead = false;
+
+        public bool IsDead()
+        {
+            return characterCurrentSecondaryStatus.health > 0;
+        }
+
         public void Hit(int damage)
         {
             StartCoroutine(OnHit(damage));
+        }
+
+        protected void FlashCharacter()
+        {
+            Sequence flashSequece = DOTween.Sequence();
+
+            flashSequece.Append(characterSprite.DOColor(flashColor, flashTime));
+            flashSequece.Append(characterSprite.DOColor(originColor, flashTime));
+        }
+
+        protected void FadeCharacter()
+        {
+            characterSprite.DOFade(0f, fadeTime);
         }
 
         private IEnumerator OnAttack()
@@ -187,7 +214,7 @@ namespace NumGates.TestBattle
 
         private IEnumerator OnHit(int damage)
         {
-            StopTimer();
+            FlashCharacter();
 
             UIFloatingText.Create($"{damage}", transform.position, Vector3.up, 0.5f, 2f, 1f, Color.white);
 
@@ -196,11 +223,11 @@ namespace NumGates.TestBattle
 
             if(characterCurrentSecondaryStatus.health - damage > 0)
             {
+                // TODO: Add hit animation
+
                 characterCurrentSecondaryStatus.health -= damage;
 
-                yield return new WaitForSecondsRealtime(1f);
-
-                StartTimer();
+                yield return null;
             }
             else
             {
@@ -210,20 +237,19 @@ namespace NumGates.TestBattle
             }
         }
 
-        private IEnumerator OnDead()
+        protected virtual IEnumerator OnDead()
         {
-            // TODO: Call action to battle manager when character die (switch position)
+            // For individual OnDead()
 
-            yield return new WaitForSecondsRealtime(1f);
+            // TODO: Add dead animation
 
-            ResetTimer();
-            RemoveTimerAction();
-
-            yield return new WaitForSecondsRealtime(1f);
-
-            Destroy(gameObject);
+            yield return null;
         }
 
+        protected virtual void DestroyCharacter()
+        {
+            // For destroy character after dead or not
+        }
         #endregion
     }
 }

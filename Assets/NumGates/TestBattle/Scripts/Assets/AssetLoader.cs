@@ -88,7 +88,7 @@ namespace NumGates.TestBattle
 
                     if (!cache.ContainsKey(key))
                     {
-                        Debug.Log($"Add {result} to caches [{key}]");
+                        //Debug.Log($"Add {result} to caches [{key}]");
                         cache.Add(key, result);
                     }
                 }

@@ -157,6 +157,40 @@ MonoBehaviour:
     healingEffect: 0
     buffEffect: 0
     debuffEffect: 0
+  characterCurrentPrimaryStatus:
+    STR: 0
+    AGI: 0
+    VIT: 0
+    DEX: 0
+    INT: 0
+    WIS: 0
+    CHR: 0
+    LUK: 0
+  characterCurrentSecondaryStatus:
+    physicalAttack: 0
+    physicalDefense: 0
+    physicalResist: 0
+    timer: 0
+    speed: 0
+    dodge: 0
+    accuracy: 0
+    criticalDamage: 0
+    criticalChance: 0
+    criticalMultiplier: 0
+    health: 0
+    magicalAttack: 0
+    magicalDefense: 0
+    magicalResist: 0
+    healingPower: 0
+    healingEffect: 0
+    buffEffect: 0
+    debuffEffect: 0
   targetGroup: 0
   targets: 00000000
+  characterSprite: {fileID: 3914450476328767224}
+  originColor: {r: 1, g: 0.42745098, b: 0, a: 1}
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  flashTime: 0.1
+  fadeTime: 1
+  isFadeOnDead: 0
   statusMultiplier: 1.5
