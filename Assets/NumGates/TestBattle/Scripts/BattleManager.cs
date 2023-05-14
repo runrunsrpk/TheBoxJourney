@@ -15,10 +15,8 @@ namespace NumGates.TestBattle
         private GameObject allyParent;
         private GameObject enemyParent;
 
-        private List<Ally> allies;
-        private List<Enemy> enemies;
-
-        private List<GameObject> alliesObject;
+        private List<Character> allies;
+        private List<Character> enemies;
 
         private TimerManager timerManager;
 
@@ -42,40 +40,10 @@ namespace NumGates.TestBattle
         #region Character Management
 
         // Bypass InitCharacter from LevelManager
-        public void InitCharacter(List<Ally> allies, List<Enemy> enemies)
-        {
-            this.enemies = enemies;
-            Debug.Log($"Enemy count: {this.enemies.Count}");
-            int enemyIndex = 0;
-
-            foreach (Enemy enemy in this.enemies)
-            {
-                enemyIndex++;
-                Debug.Log($"{enemy.name} Index {enemyIndex}");
-                Enemy tempEnemy = Instantiate(enemy);
-                tempEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, this.enemies.Count, BattleGroup.Enemy));
-                tempEnemy.InitCharacter(timerManager, this);
-            }
-
-            this.allies = allies;
-            int allyIndex = 0;
-
-            foreach (Ally ally in this.allies)
-            {
-                allyIndex++;
-                Ally tempAlly = Instantiate(ally);
-                tempAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, this.allies.Count, BattleGroup.Ally));
-                tempAlly.SetFlipX(true);
-                tempAlly.InitCharacter(timerManager, this);
-                tempAlly.InitCharacter(timerManager, this);
-            }
-        }
-
-        // Bypass InitCharacter from LevelManager 2
         public void InitCharacter(List<CharacterAlly> allies, List<CharacterEnemy> enemies)
         {
             int enemyIndex = 0;
-            this.enemies = new List<Enemy>();
+            this.enemies = new List<Character>();
 
             foreach (CharacterEnemy enemy in enemies)
             {
@@ -89,7 +57,7 @@ namespace NumGates.TestBattle
             }
 
             int allyIndex = 0;
-            this.allies = new List<Ally>();
+            this.allies = new List<Character>();
 
             foreach (CharacterAlly ally in allies)
             {
@@ -104,173 +72,130 @@ namespace NumGates.TestBattle
             }
         }
 
-        public void InitCharacter()
+        public void AddCharacter(BattleGroup group, Character character, int positionIndex)
         {
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.InitCharacter(timerManager, this);
-            }
-
-            foreach (Ally ally in allies)
-            {
-                ally.InitCharacter(timerManager, this);
-            }
+            GetCharacterGroupList(group).Insert(positionIndex, character);
         }
 
-        public void AddCharacter(BattleGroup group, Character character)
+        public void RemoveCharacter(BattleGroup group, int positionIndex)
         {
-            switch (group)
-            {
-                case BattleGroup.Ally:
-                    allies.Add(character as Ally);
-                    break;
-                case BattleGroup.Enemy:
-                    enemies.Add(character as Enemy);
-                    break;
-            }
-        }
-
-        public void AddCharacter(BattleGroup group, Character character, int position)
-        {
-            switch (group)
-            {
-                case BattleGroup.Ally:
-                    allies.Insert(position, character as Ally);
-                    break;
-                case BattleGroup.Enemy:
-                    enemies.Insert(position, character as Enemy);
-                    break;
-            }
-        }
-
-        public void RemoveCharacter(BattleGroup group, int position)
-        {
-            switch (group)
-            {
-                case BattleGroup.Ally:
-                    {
-                        DestroyCharacter(allyParent.transform, position);
-                        allies.RemoveAt(position);
-                        break;
-                    }
-                    
-                case BattleGroup.Enemy:
-                    {
-                        DestroyCharacter(enemyParent.transform, position);
-                        enemies.RemoveAt(position);
-                        break;
-                    }
-                    
-            }
+            GetCharacterGroupList(group).RemoveAt(positionIndex);
         }
 
         public void RemoveAllCharacters(BattleGroup group)
         {
-            switch (group)
-            {
-                case BattleGroup.Ally:
-                    {
-                        DestroyAllCharacters(allyParent.transform);
-                        allies.Clear();
-                        break;
-                    }
-
-                case BattleGroup.Enemy:
-                    {
-                        DestroyAllCharacters(enemyParent.transform);
-                        enemies.Clear();
-                        break;
-                    }
-
-            }
+            GetCharacterGroupList(group).Clear();
         }
 
-        private void DestroyCharacter(Transform parent, int position)
+        public void DestroyCharacter(BattleGroup group, int positionIndex)
         {
-            Destroy(parent.GetChild(position - 1));
+            Transform parent = GetCharacterGroupParent(group);
+
+            Destroy(parent.GetChild(positionIndex - 1));
         }
 
-        private void DestroyAllCharacters(Transform parent)
+        public void DestroyAllCharacters(BattleGroup group)
         {
-            foreach(Transform child in parent)
+            Transform parent = GetCharacterGroupParent(group);
+
+            foreach (Transform child in parent)
             {
                 Destroy(child.gameObject);
             }
         }
 
-        private void SwitchCharacterIndex(BattleGroup group)
+        private void ChangeCharacterIndex(BattleGroup group)
         {
 
         }
 
-        //public void SwitchCharacter(BattleGroup group, int position1, int position2)
-        //{
-        //    switch (group)
-        //    {
-        //        case BattleGroup.Ally: break;
-        //        case BattleGroup.Enemy: break;
-        //    }
-        //}
+        private void ChangeAllCharactersIndex(BattleGroup group)
+        {
+
+        }
+
+        private int GetNearestCharacterPositionIndex(BattleGroup group, int position)
+        {
+            List<Character> characters = GetCharacterGroupList(group);
+
+            for(int nearestPosition = position + 1; nearestPosition < characters.Count; nearestPosition++)
+            {
+                if (!characters[nearestPosition].IsDead())
+                {
+                    return nearestPosition;
+                }
+            }
+
+            return 0;
+        }
+
+        private List<Character> GetCharacterGroupList(BattleGroup group)
+        {
+            return group == BattleGroup.Ally ? allies : enemies;
+        }
+
+        private Transform GetCharacterGroupParent(BattleGroup group)
+        {
+            return group == BattleGroup.Ally ? allyParent.transform : enemyParent.transform;
+        }
+
+        private bool IsAllCharactersDead(BattleGroup group)
+        {
+            List<Character> characters = GetCharacterGroupList(group);
+
+            foreach (Character character in characters)
+            {
+                if (!character.IsDead())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Character Action
 
+        public void OnCharacterDead(BattleGroup group)
+        {
+            if (IsAllCharactersDead(group))
+            {
+                Debug.LogWarning($"Game End");
+            }
+        }
+
         public void NormalAttackOnTarget(BattleGroup group, List<int> targets, int damage)
         {
-            switch (group)
+            List<Character> characters = GetCharacterGroupList(group);
+
+            foreach (int target in targets)
             {
-                case BattleGroup.Ally:
+                Character character = characters[target];
+
+                if(character.IsDead())
+                {
+                    if(group == BattleGroup.Ally)
                     {
-                        foreach(int target in targets)
-                        {
-                            allies[target].Hit(damage);
-                        }
-
-                        break;
+                        character = characters[GetNearestCharacterPositionIndex(group, target)];
                     }
-
-                case BattleGroup.Enemy:
+                    else
                     {
-                        foreach (int target in targets)
-                        {
-                            enemies[target].Hit(damage);
-                        }
-
-                        break;
+                        RemoveCharacter(group, target);
+                        character = characters[target];
                     }
+                }
+
+                character.Hit(damage);
             }
         }
 
         public void SkillAttackOnTarget(BattleGroup group, List<int> targets)
         {
-            switch (group)
-            {
-                case BattleGroup.Ally:
-                    {
-                        foreach (int target in targets)
-                        {
-                            //allies[target].Hit(damage);
-                        }
 
-                        break;
-                    }
-
-                case BattleGroup.Enemy:
-                    {
-                        foreach (int target in targets)
-                        {
-                            //enemies[target].Hit(damage);
-                        }
-
-                        break;
-                    }
-            }
         }
 
-        private int GetNearestCharacter(int index)
-        {
-            return 0;
-        }
         #endregion
     }
 }

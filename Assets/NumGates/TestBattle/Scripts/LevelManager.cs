@@ -90,7 +90,10 @@ namespace NumGates.TestBattle
         public void ResetTestBattle()
         {
             battleManager.RemoveAllCharacters(BattleGroup.Ally);
+            battleManager.DestroyAllCharacters(BattleGroup.Ally);
+
             battleManager.RemoveAllCharacters(BattleGroup.Enemy);
+            battleManager.DestroyAllCharacters(BattleGroup.Enemy);
         }
 
         public void DestroyManager()

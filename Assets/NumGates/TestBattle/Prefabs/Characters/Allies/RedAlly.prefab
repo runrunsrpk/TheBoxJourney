@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPrimaryStatus:
-    STR: 0
+    STR: 1
     AGI: 0
     VIT: 5
     DEX: 0

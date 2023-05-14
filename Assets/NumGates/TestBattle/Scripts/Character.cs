@@ -20,11 +20,11 @@ namespace NumGates.TestBattle
         [SerializeField] protected BattleGroup targetGroup;
         [SerializeField] protected List<int> targets;
 
-        private UITimerGauge uiTimerGauge;
-        private UIHealthGauge uiHealthGauge;
+        protected UITimerGauge uiTimerGauge;
+        protected UIHealthGauge uiHealthGauge;
 
-        private TimerManager timerManager;
-        private BattleManager battleManager;
+        protected TimerManager timerManager;
+        protected BattleManager battleManager;
 
         private void Awake()
         {
@@ -177,7 +177,7 @@ namespace NumGates.TestBattle
 
         public bool IsDead()
         {
-            return characterCurrentSecondaryStatus.health > 0;
+            return characterCurrentSecondaryStatus.health <= 0;
         }
 
         public void Hit(int damage)
