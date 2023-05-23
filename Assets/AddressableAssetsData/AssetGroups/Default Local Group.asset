@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 203d108fdbdfd4c4c9bc74266970ed65
+  m_SerializeEntries:
+  - m_GUID: 76c448236380bc14ca461a00686c309c
+    m_Address: Allies
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Ally
+  - m_GUID: 7976e2f59140c8a4eac87a5918cc904b
+    m_Address: Managers
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Manager
+  - m_GUID: a9c0e25a7f6e88c40a9ca85f4d11529c
+    m_Address: UIs
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+  - m_GUID: 916fdc1d6b30c184f99dc7982052267f
+    m_Address: Enemies
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Enemy
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 02f1d237c5f19f740b9b5822761e589f, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d3f038a0be3a53f409d1c0a74f46f365, type: 2}
+    - {fileID: 11400000, guid: 046f4e35639e31d4dbfdc4e17483e423, type: 2}

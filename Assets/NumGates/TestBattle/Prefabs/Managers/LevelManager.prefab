@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5325133948392398484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5325133948392398474}
+  - component: {fileID: 5325133948392398475}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5325133948392398474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325133948392398484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5325133948392398475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325133948392398484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bae61ceabb83749bfc395897041dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allies:
+  - {fileID: 7953237743885870632, guid: af99c4663b215914c991f2c7de607586, type: 3}
+  - {fileID: 4085411520071574981, guid: 5cbedbd29664b6c40b3e92f664470185, type: 3}
+  enemies:
+  - {fileID: 3649481688447348800, guid: c867582c494a5b142b00bec4721273c2, type: 3}
+  - {fileID: 8379901445202459294, guid: 56d38f486c124f9489bd56b2daf31a2d, type: 3}
+  - {fileID: 3649481688447348800, guid: c867582c494a5b142b00bec4721273c2, type: 3}
+  - {fileID: 8379901445202459294, guid: 56d38f486c124f9489bd56b2daf31a2d, type: 3}
+  characterAllies: 0000000003000000
+  characterEnemies: 0000000001000000000000000100000001000000010000000100000001000000
+  timerManagerPrefab: {fileID: 6301555141947227174, guid: b1410c6a899016b42a67571e37aa2f21, type: 3}
+  battleManagerPrefab: {fileID: 2071739000489719936, guid: 3470ac2712eb7394eb1c3ea3684f4f9c, type: 3}
