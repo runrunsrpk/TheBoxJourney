@@ -13,6 +13,8 @@ namespace NumGates.TestBattle
         public static readonly string UIFloatingText = "UIFloatingTextPixel";
         public static readonly string UITimerGauge = "UITimerGauge";
         public static readonly string UIHealthGauge = "UIHealthGauge";
+        public static readonly string UIAllyManagement = "UIAllyManagement";
+        public static readonly string UICharacterIcon = "UICharacterIcon";
     }
 
     public class AssetLoaderUI : AssetLoader, IAssetLoader

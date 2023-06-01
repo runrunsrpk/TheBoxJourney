@@ -19,15 +19,17 @@ namespace NumGates.TestBattle
         [SerializeField] private AssetLoaderUI assetLoaderUI;
         [SerializeField] private AssetLoaderAlly assetLoaderAlly;
         [SerializeField] private AssetLoaderEnemy assetLoaderEnemy;
+        [SerializeField] private AssetLoaderAllyInfo assetLoaderAllyInfo;
 
         [Header("UI Reference")]
         [SerializeField] private AssetLabelReference uiLable;
-        [SerializeField] private AssetReference uiFloatingText;
-        [SerializeField] private AssetReference uiBattleEvent;
 
         [Header("Character Reference")]
         [SerializeField] private AssetLabelReference allyLable;
         [SerializeField] private AssetLabelReference enemyLable;
+
+        [Header("Database Reference")]
+        [SerializeField] private AssetLabelReference allyInfoLable;
 
         private void Awake()
         {
@@ -59,6 +61,7 @@ namespace NumGates.TestBattle
         {
             yield return StartCoroutine(assetLoaderUI.LoadAssets(uiLable));
             yield return StartCoroutine(assetLoaderAlly.LoadAssets(allyLable));
+            yield return StartCoroutine(assetLoaderAllyInfo.LoadAssets(allyInfoLable));
             yield return StartCoroutine(assetLoaderEnemy.LoadAssets(enemyLable));
 
             OnLoadComplete?.Invoke();
@@ -70,6 +73,8 @@ namespace NumGates.TestBattle
         public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
         public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
         public UIHealthGauge GetUIHealthGauge() => assetLoaderUI.GetAsset(UIReference.UIHealthGauge).GetComponent<UIHealthGauge>();
+        public UIAllyManagement GetUIAllyManagement() => assetLoaderUI.GetAsset(UIReference.UIAllyManagement).GetComponent<UIAllyManagement>();
+        public UICharacterIcon GetUICharacterIcon() => assetLoaderUI.GetAsset(UIReference.UICharacterIcon).GetComponent<UICharacterIcon>();
         #endregion
 
         #region Character Asset
@@ -77,6 +82,12 @@ namespace NumGates.TestBattle
         public GameObject GetAllyCharacter(CharacterAlly ally) => assetLoaderAlly.GetAsset(ally);
         public GameObject GetEnemyCharacter(CharacterEnemy enemy) => assetLoaderEnemy.GetAsset(enemy);
 
+        #endregion
+
+        #region Database Asset
+
+        public AllyInfo GetAllyInfo(CharacterAlly ally) => assetLoaderAllyInfo.GetAsset(ally);
+        public List<AllyInfo> GetAllAllyInfo() => assetLoaderAllyInfo.GetAllAssets();
         #endregion
     }
 }

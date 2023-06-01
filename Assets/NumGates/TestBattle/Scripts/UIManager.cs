@@ -12,8 +12,10 @@ namespace NumGates.TestBattle
 
         [SerializeField] private UIBattleEvent uiBattleEventPrefab;        
         [SerializeField] private UIFloatingText uiFloatingTextPrefab;
+        [SerializeField] private UIAllyManagement uiAllyManagementPrefab;
 
         private UIBattleEvent uiBattleEvent;
+        private UIAllyManagement uiAllyManagement;
 
         private void Awake()
         {
@@ -30,19 +32,24 @@ namespace NumGates.TestBattle
 
         public void InitManager(LevelManager levelManager)
         {
+            if(uiAllyManagement == null)
+            {
+                uiAllyManagement = Instantiate(uiAllyManagementPrefab);
+                uiAllyManagement.Show();
+            }
+
             if(uiBattleEvent == null)
             {
                 uiBattleEvent = Instantiate(uiBattleEventPrefab);
                 uiBattleEvent.InitUIBattle(levelManager);
             }
-            
         }
 
         // TODO: Create object pooling function
-        public UIFloatingText GetFloatingTextUI()
-        {
-            return uiFloatingTextPrefab;
-        }
+        //public UIFloatingText GetFloatingTextUI()
+        //{
+        //    return uiFloatingTextPrefab;
+        //}
     }
 }
 

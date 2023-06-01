@@ -27,6 +27,8 @@ namespace NumGates.TestBattle
 
         private void Awake()
         {
+            allyButton.onClick.AddListener(OnClickAlly);
+
             startButton.onClick.AddListener(OnClickStart);
             stopButton.onClick.AddListener(OnClickStop);
             resetButton.onClick.AddListener(OnClickReset);
@@ -41,6 +43,8 @@ namespace NumGates.TestBattle
 
         private void OnDestroy()
         {
+            allyButton.onClick.RemoveListener(OnClickAlly);
+
             startButton.onClick.RemoveListener(OnClickStart);
             stopButton.onClick.RemoveListener(OnClickStop);
             resetButton.onClick.RemoveListener(OnClickReset);
