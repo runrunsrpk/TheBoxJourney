@@ -38,10 +38,46 @@ namespace NumGates.TestBattle
             exitButton.onClick.RemoveListener(OnClickExit);
         }
 
-        public void OnClickExit()
+        #region Team Button
+        private void OnClickExit()
         {
             Hide();
         }
+
+        private void OnClickSave()
+        {
+
+        }
+
+        private void OnClickClear()
+        {
+
+        }
+        #endregion
+
+        #region Control Button
+
+        private void OnClickAdd()
+        {
+
+        }
+
+        private void OnClickRemove()
+        {
+
+        }
+
+        private void OnClickUpdate()
+        {
+
+        }
+
+        private void OnClickIndex()
+        {
+
+        }
+
+        #endregion
 
         public void Hide()
         {
@@ -53,6 +89,7 @@ namespace NumGates.TestBattle
             gameObject.SetActive(true);
 
             LoadCharacterIcon();
+            LoadCharacterIndex();
         }
 
         private void LoadCharacterIcon()
@@ -61,11 +98,12 @@ namespace NumGates.TestBattle
 
             List<AllyInfo> allies = AssetManager.instance.GetAllAllyInfo();
 
-            UICharacterIcon uiCharacterIconPref = AssetManager.instance.GetUICharacterIcon();
+            GameObject uiCharacterIconPref = AssetManager.instance.GetUI(UIReference.UICharacterIcon);
 
             foreach (AllyInfo ally in allies)
             {
-                GameObject icon = Instantiate(uiCharacterIconPref.gameObject, selectionContentPanel);
+                GameObject uiTemp = Instantiate(uiCharacterIconPref, selectionContentPanel);
+                UICharacterIcon icon = uiTemp.GetComponent<UICharacterIcon>();
                 icon.GetComponent<UICharacterIcon>().SetImage(ally.iconSprite);
             }
         }

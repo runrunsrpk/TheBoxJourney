@@ -7,49 +7,35 @@ namespace NumGates.TestBattle
 {
     public class UIManager : MonoBehaviour
     {
-        // TODO: Change UIManager instance to AssetManager script
-        public static UIManager instance { get; private set; }
-
-        [SerializeField] private UIBattleEvent uiBattleEventPrefab;        
-        [SerializeField] private UIFloatingText uiFloatingTextPrefab;
-        [SerializeField] private UIAllyManagement uiAllyManagementPrefab;
-
         private UIBattleEvent uiBattleEvent;
+
+        public UIAllyManagement UIAllyManagement
+        {
+            get
+            {
+                if (uiAllyManagement == null)
+                {
+                    GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIAllyManagement));
+                    uiAllyManagement = uiTemp.GetComponent<UIAllyManagement>();
+                    uiAllyManagement.Hide();
+                }
+
+                return uiAllyManagement;
+            }
+        }
         private UIAllyManagement uiAllyManagement;
 
-        private void Awake()
+        public void InitManager()
         {
-            // If there is an instance, and it's not me, delete myself.
-
-            if (instance != null && instance != this)
+            if (uiBattleEvent == null)
             {
-                Destroy(this);
-            }
-
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-
-        public void InitManager(LevelManager levelManager)
-        {
-            if(uiAllyManagement == null)
-            {
-                uiAllyManagement = Instantiate(uiAllyManagementPrefab);
-                uiAllyManagement.Show();
-            }
-
-            if(uiBattleEvent == null)
-            {
-                uiBattleEvent = Instantiate(uiBattleEventPrefab);
-                uiBattleEvent.InitUIBattle(levelManager);
+                GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIBattleEvent));
+                uiBattleEvent = uiTemp.GetComponent<UIBattleEvent>();
+                uiBattleEvent.InitUIBattle();
             }
         }
 
         // TODO: Create object pooling function
-        //public UIFloatingText GetFloatingTextUI()
-        //{
-        //    return uiFloatingTextPrefab;
-        //}
     }
 }
 

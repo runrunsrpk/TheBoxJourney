@@ -24,6 +24,7 @@ namespace NumGates.TestBattle
         [SerializeField] private Button resetButton;
 
         private LevelManager levelManager;
+        private UIManager uiManager;
 
         private void Awake()
         {
@@ -50,9 +51,10 @@ namespace NumGates.TestBattle
             resetButton.onClick.RemoveListener(OnClickReset);
         }
 
-        public void InitUIBattle(LevelManager levelManager)
+        public void InitUIBattle()
         {
-            this.levelManager = levelManager;
+            levelManager = GameManager.instance.LevelManager;
+            uiManager = GameManager.instance.UIManager;
         }
 
         #region Battle Setup
@@ -60,6 +62,8 @@ namespace NumGates.TestBattle
         public void OnClickAlly()
         {
             Debug.Log($"Click 'ALLY' button");
+
+            uiManager.UIAllyManagement.Show();
         }
 
         public void OnClickSoulbox()

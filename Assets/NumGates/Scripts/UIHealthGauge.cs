@@ -25,8 +25,8 @@ namespace NumGates
         // Create UITimerGauge with customize setup
         public static UIHealthGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxHealth, Transform parent)
         {
-            UIHealthGauge healthGauge = Instantiate(AssetManager.instance.GetUIHealthGauge(), parent);
-
+            GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIHealthGauge), parent);
+            UIHealthGauge healthGauge = uiTemp.GetComponent<UIHealthGauge>();
             healthGauge.InitHealthGauge(origin, offset, width, height, maxHealth);
 
             return healthGauge;

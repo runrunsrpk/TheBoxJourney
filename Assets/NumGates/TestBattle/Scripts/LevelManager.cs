@@ -12,9 +12,6 @@ namespace NumGates.TestBattle
 
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] private List<Ally> allies;
-        [SerializeField] private List<Enemy> enemies;
-
         [SerializeField] private List<CharacterAlly> characterAllies;
         [SerializeField] private List<CharacterEnemy> characterEnemies;
 
@@ -23,29 +20,6 @@ namespace NumGates.TestBattle
 
         private TimerManager timerManager;
         private BattleManager battleManager;
-
-        private void Awake()
-        {
-
-        }
-
-        private void Start()
-        {
-            //InitManager();
-        }
-
-        private void Update()
-        {
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    timerManager.StartTimer();
-            //}
-
-            //if (Input.GetKeyDown(KeyCode.A))
-            //{
-            //    InitManager();
-            //}
-        }
 
         public void InitManager()
         {
@@ -59,7 +33,6 @@ namespace NumGates.TestBattle
             {
                 battleManager = Instantiate(battleManagerPrefab, transform);
                 battleManager.InitBattle(timerManager);
-                //battleManager.InitCharacter(allies, enemies);
                 battleManager.InitCharacter(characterAllies, characterEnemies);
             }
         }

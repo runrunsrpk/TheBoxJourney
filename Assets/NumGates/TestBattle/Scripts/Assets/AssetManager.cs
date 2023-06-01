@@ -44,19 +44,6 @@ namespace NumGates.TestBattle
             DontDestroyOnLoad(instance);
         }
 
-        private void Start()
-        {
-            //StartCoroutine(assetLoaderUI.LoadAssets(uiLable));
-            //StartCoroutine(assetLoaderAlly.LoadAssets(allyLable));
-            //StartCoroutine(assetLoaderEnemy.LoadAssets(enemyLable));
-
-        }
-
-        private void Update()
-        {
-
-        }
-
         public IEnumerator InitAssets()
         {
             yield return StartCoroutine(assetLoaderUI.LoadAssets(uiLable));
@@ -69,12 +56,14 @@ namespace NumGates.TestBattle
 
         #region UI Asset
 
-        public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(UIReference.UIFloatingText).GetComponent<UIFloatingText>();
-        public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
-        public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
-        public UIHealthGauge GetUIHealthGauge() => assetLoaderUI.GetAsset(UIReference.UIHealthGauge).GetComponent<UIHealthGauge>();
-        public UIAllyManagement GetUIAllyManagement() => assetLoaderUI.GetAsset(UIReference.UIAllyManagement).GetComponent<UIAllyManagement>();
-        public UICharacterIcon GetUICharacterIcon() => assetLoaderUI.GetAsset(UIReference.UICharacterIcon).GetComponent<UICharacterIcon>();
+        //public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(UIReference.UIFloatingText).GetComponent<UIFloatingText>();
+        //public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
+        //public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
+        //public UIHealthGauge GetUIHealthGauge() => assetLoaderUI.GetAsset(UIReference.UIHealthGauge).GetComponent<UIHealthGauge>();
+        //public UIAllyManagement GetUIAllyManagement() => assetLoaderUI.GetAsset(UIReference.UIAllyManagement).GetComponent<UIAllyManagement>();
+        //public UICharacterIcon GetUICharacterIcon() => assetLoaderUI.GetAsset(UIReference.UICharacterIcon).GetComponent<UICharacterIcon>();
+
+        public GameObject GetUI(string ui) => assetLoaderUI.GetAsset(ui);
         #endregion
 
         #region Character Asset

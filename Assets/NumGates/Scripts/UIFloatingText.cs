@@ -23,7 +23,8 @@ namespace NumGates
         // Create FloatingText with customize setup
         public static UIFloatingText Create(string text, Vector3 origin, Vector3 direction, float distance, float speed, float duration, Color color)
         {
-            UIFloatingText floatingText = Instantiate(AssetManager.instance.GetUIFloatingText());
+            GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIFloatingText));
+            UIFloatingText floatingText = uiTemp.GetComponent<UIFloatingText>();
             floatingText.InitFloating(text, origin, direction, distance, speed, duration, color);
             floatingText.StartFloating();
 

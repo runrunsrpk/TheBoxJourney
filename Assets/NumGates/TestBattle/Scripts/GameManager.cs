@@ -11,7 +11,10 @@ namespace NumGates.TestBattle
         [SerializeField] private LevelManager levelManagerPrefab;
         [SerializeField] private UIManager uiManagerPrefab;
 
+        public LevelManager LevelManager => levelManager;
         private LevelManager levelManager;
+
+        public UIManager UIManager => uiManager;
         private UIManager uiManager;
 
         private void Awake()
@@ -65,7 +68,7 @@ namespace NumGates.TestBattle
             {
                 //uiManager = Instantiate(uiManagerPrefab, transform);
                 uiManager = uiManagerPrefab;
-                uiManager.InitManager(levelManager);
+                uiManager.InitManager();
             }
         }
 
