@@ -92,7 +92,6 @@ namespace NumGates.TestBattle
 
         private bool isAddCharacter = false;
 
-
         // TODO: Load ally data to custom data
         private void OnClickAdd()
         {
@@ -149,7 +148,6 @@ namespace NumGates.TestBattle
             LoadCharacterIcon();
             LoadCharacterMember();
             LoadPreviewCharacter();
-            // TODO: Load FirstPositionCharacter or FirstSelectionIcon
         }
 
         #region Action
@@ -179,21 +177,33 @@ namespace NumGates.TestBattle
 
         private void ClickAddMember(int index)
         {
+            allyDatas[index] = customData;
 
+            teamContentPanel.GetChild(index).GetComponent<UIMemberIcon>().SetImage(customData.info.fullBodySprite);
+
+            // TODO: Update current data to stats
+            // TODO: Clean code
+            isAddCharacter = false;
+            addButton.GetComponentInChildren<TextMeshProUGUI>().text = "Add";
+
+            foreach (Transform child in teamContentPanel)
+            {
+                UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
+                member.DisableAddMember();
+            }
         }
 
         #endregion
 
         private void LoadPreviewCharacter()
         {
-            if(allyDatas.Count > 0)
-            {
-                previewImage.sprite = allyDatas[0].info.fullBodySprite;
-            }
-            else
-            {
-                previewImage.sprite = allies[0].fullBodySprite;
-            }
+            previewImage.sprite = allies[0].fullBodySprite;
+
+            AllyInfo allyInfo = allies[0];
+            AllyData allyData = GetAllyDataInTeam(allyInfo.character);
+
+            customData.info = allyInfo;
+            customData.stats = allyData.stats;
         }
 
         private void LoadCharacterIcon()
@@ -217,29 +227,35 @@ namespace NumGates.TestBattle
         private void LoadCharacterMember()
         {
             DestroyChildren(teamContentPanel);
-
-            allyDatas = levelManager.GetAllyDatas();
+            LoadAllyDatas();
 
             GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UIMemberIcon);
+            int index = 0;
 
-            for (int index = 0; index < maxTeamMember; index++)
+            foreach(AllyData allyData in allyDatas)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, teamContentPanel);
                 UIMemberIcon member = uiTemp.GetComponent<UIMemberIcon>();
                 member.InitUI(this, index);
-
-                if (index < allyDatas.Count)
-                {
-                    member.SetImage(allyDatas[index].info.fullBodySprite);
-                }
-                else
-                {
-                    member.SetImage(null);
-                }
+                member.SetImage(allyData.info.character != CharacterAlly.EmptyAlly ? allyData.info.fullBodySprite : null);
+                index++;
             }
         }
 
         #region Helper
+        private void LoadAllyDatas()
+        {
+            allyDatas.Clear();
+            allyDatas = levelManager.GetAllyDatas();
+
+            if(allyDatas.Count == 0)
+            {
+                for (int index = 0; index < maxTeamMember; index++)
+                {
+                    allyDatas.Add(new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
+                }
+            }
+        }
 
         private AllyData GetAllyDataInTeam(CharacterAlly character)
         {
@@ -250,7 +266,7 @@ namespace NumGates.TestBattle
                     return allyData;
                 }
             }
-            return new AllyData();
+            return new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats());
         }
         private void DestroyChildren(Transform parent)
         {

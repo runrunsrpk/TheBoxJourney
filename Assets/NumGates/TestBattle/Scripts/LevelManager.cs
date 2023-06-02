@@ -15,6 +15,12 @@ namespace NumGates.TestBattle
     {
         public AllyInfo info;
         public AllyStats stats;
+
+        public AllyData(AllyInfo info, AllyStats stats)
+        {
+            this.info = info;
+            this.stats = stats;
+        }
     }
 
     public struct EnemyData

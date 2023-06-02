@@ -8,6 +8,7 @@ namespace NumGates.TestBattle
 {
     public enum CharacterAlly
     {
+        EmptyAlly,
         RedAlly,
         OrangeAlly,
         YellowAlly,
