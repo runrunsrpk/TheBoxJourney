@@ -87,6 +87,57 @@ namespace NumGates.TestBattle
             }
         }
 
+        public void InitCharacterTimer()
+        {
+            foreach (Ally ally in allies)
+            {
+                ally.InitTimer(timerManager);
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.InitTimer(timerManager);
+            }
+        }
+
+        // InitAllyCharacter from ally management setting
+        public void InitAllyCharacter(List<AllyData> allies)
+        {
+            int allyIndex = 0;
+            this.allies = new List<Character>();
+
+            foreach (AllyData ally in allies)
+            {
+                allyIndex++;
+
+                Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
+                spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
+                spawnedAlly.SetFlipX(true);
+                spawnedAlly.InitCharacter(this);
+
+                this.allies.Add(spawnedAlly);
+            }
+        }
+
+        // InitEnemyCharacter from enemy management setting
+        public void InitEnemyCharacter(List<EnemyData> enemies)
+        {
+            int enemyIndex = 0;
+            this.enemies = new List<Character>();
+
+            foreach (EnemyData enemy in enemies)
+            {
+                enemyIndex++;
+
+                Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy.character).GetComponent<Enemy>(), enemyParent.transform);
+                spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, enemies.Count, BattleGroup.Enemy));
+                spawnedEnemy.InitCharacter(this);
+
+                this.enemies.Add(spawnedEnemy);
+            }
+        }
+
+
         public void AddCharacter(BattleGroup group, Character character, int positionIndex)
         {
             GetCharacterGroupList(group).Insert(positionIndex, character);

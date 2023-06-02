@@ -17,6 +17,7 @@ namespace NumGates.TestBattle
                 {
                     GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIAllyManagement));
                     uiAllyManagement = uiTemp.GetComponent<UIAllyManagement>();
+                    uiAllyManagement.InitUI();
                     uiAllyManagement.Hide();
                 }
 
@@ -31,7 +32,7 @@ namespace NumGates.TestBattle
             {
                 GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIBattleEvent));
                 uiBattleEvent = uiTemp.GetComponent<UIBattleEvent>();
-                uiBattleEvent.InitUIBattle();
+                uiBattleEvent.InitUI();
             }
         }
 

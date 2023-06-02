@@ -22,6 +22,7 @@ namespace NumGates.TestBattle
         [SerializeField] private Button startButton;
         [SerializeField] private Button stopButton;
         [SerializeField] private Button resetButton;
+        [SerializeField] private Button clearButton;
 
         private LevelManager levelManager;
         private UIManager uiManager;
@@ -37,9 +38,9 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            startButton.interactable = true;
+            startButton.interactable = false;
             stopButton.interactable = false;
-            resetButton.interactable = true;
+            resetButton.interactable = false;
         }
 
         private void OnDestroy()
@@ -49,12 +50,16 @@ namespace NumGates.TestBattle
             startButton.onClick.RemoveListener(OnClickStart);
             stopButton.onClick.RemoveListener(OnClickStop);
             resetButton.onClick.RemoveListener(OnClickReset);
+
+            levelManager.OnBattleReady -= BattleReady;
         }
 
-        public void InitUIBattle()
+        public void InitUI()
         {
             levelManager = GameManager.instance.LevelManager;
             uiManager = GameManager.instance.UIManager;
+
+            levelManager.OnBattleReady += BattleReady;
         }
 
         #region Battle Setup
@@ -84,6 +89,10 @@ namespace NumGates.TestBattle
         #endregion
 
         #region Battle Controller
+        private void BattleReady(bool isReady)
+        {
+            startButton.interactable = isReady;
+        }
 
         public void OnClickStart()
         {
@@ -118,6 +127,10 @@ namespace NumGates.TestBattle
             resetButton.interactable = false;
         }
 
+        public void OnClickClear()
+        {
+            // TODO: Change clear to remove all character and reset to reset battle data.
+        }
         #endregion
     }
 }

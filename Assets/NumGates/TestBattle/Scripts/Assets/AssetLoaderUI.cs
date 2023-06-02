@@ -15,6 +15,7 @@ namespace NumGates.TestBattle
         public static readonly string UIHealthGauge = "UIHealthGauge";
         public static readonly string UIAllyManagement = "UIAllyManagement";
         public static readonly string UICharacterIcon = "UICharacterIcon";
+        public static readonly string UIMemberIcon = "UIMemberIcon";
     }
 
     public class AssetLoaderUI : AssetLoader, IAssetLoader

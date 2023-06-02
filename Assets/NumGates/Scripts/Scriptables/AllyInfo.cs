@@ -9,38 +9,13 @@ namespace NumGates
     [CreateAssetMenu(menuName = "Scriptable/Ally/AllyInfo", order = 0, fileName = "AllyInfo")]
     public class AllyInfo : ScriptableObject
     {
+        public CharacterAlly character;
         public string allyName;
         public string allyStory;
-        //public SoulColor soulColor;
-        //public SoulStyle primaryStyle;
-        //public SoulStyle secodaryStyle;
         public Sprite iconSprite;
         public Sprite halfBodySprite;
         public Sprite fullBodySprite;
         public StyleStats styleStats;
-    }
-
-    public enum SoulColor
-    {
-        Red,
-        Orange,
-        Yellow,
-        Green,
-        Turquoise,
-        Navy,
-        Violet,
-        Pink,
-        Black,
-        White
-    }
-
-    public enum SoulStyle
-    {
-        Attacker,
-        Defender,
-        Energetic,
-        Beaster,
-        Souleaver
     }
 
     [System.Serializable]
