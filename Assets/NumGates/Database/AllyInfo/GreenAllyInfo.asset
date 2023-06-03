@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c91132bcdf8714f831840ffd883202, type: 3}
   m_Name: GreenAllyInfo
   m_EditorClassIdentifier: 
+  character: 4
   allyName: Green Soul
   allyStory: Secret Story
   iconSprite: {fileID: 1895625935, guid: 79c37f72c6fe78844a6a29b82e14d7d5, type: 3}

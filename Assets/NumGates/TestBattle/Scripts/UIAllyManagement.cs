@@ -37,10 +37,10 @@ namespace NumGates.TestBattle
 
         private LevelManager levelManager;
 
-        private List<AllyInfo> allies = new List<AllyInfo>();
-        private List<AllyData> allyDatas = new List<AllyData>();
+        private List<AllyInfo> tempAllies = new List<AllyInfo>();
+        private List<AllyData> tempAllyDatas = new List<AllyData>();
 
-        private AllyData customData;
+        private AllyData tempAllyData;
 
         public void InitUI()
         {
@@ -79,43 +79,37 @@ namespace NumGates.TestBattle
 
         private void OnClickSave()
         {
-
+            levelManager.InitAllyCharacter(tempAllyDatas);
         }
 
         private void OnClickClear()
         {
+            ResetAllyDatas();
 
+            for(int index = 0; index < maxTeamMember; index++)
+            {
+                SetTeamMemberData(index, tempAllyDatas[index]);
+                SetTeamMemberImage(index, null);
+            }
         }
         #endregion
 
         #region Control Button
 
-        private bool isAddCharacter = false;
+        private bool isAddMember = false;
 
         // TODO: Load ally data to custom data
         private void OnClickAdd()
         {
-            if(isAddCharacter == false)
+            if(isAddMember == false)
             {
-                isAddCharacter = true;
-                addButton.GetComponentInChildren<TextMeshProUGUI>().text = "Cancel";
-
-                foreach (Transform child in teamContentPanel)
-                {
-                    UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
-                    member.EnableAddMember();
-                }
+                SetButtonText(addButton, "Cancel");
+                SetEnableAddMember(true);
             }
             else
             {
-                isAddCharacter = false;
-                addButton.GetComponentInChildren<TextMeshProUGUI>().text = "Add";
-
-                foreach (Transform child in teamContentPanel)
-                {
-                    UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
-                    member.DisableAddMember();
-                }
+                SetButtonText(addButton, "Add");
+                SetEnableAddMember(false);
             }
         }
 
@@ -136,6 +130,8 @@ namespace NumGates.TestBattle
 
         #endregion
 
+        #region Show and Hide
+
         public void Hide()
         {
             gameObject.SetActive(false);
@@ -150,71 +146,63 @@ namespace NumGates.TestBattle
             LoadPreviewCharacter();
         }
 
+        #endregion
+
         #region Action
 
         private void ClickIcon(int index)
         {
-            AllyInfo allyInfo = allies[index];
-
-            previewImage.sprite = allyInfo.fullBodySprite;
-
+            AllyInfo allyInfo = tempAllies[index];
             AllyData allyData = GetAllyDataInTeam(allyInfo.character);
 
-            customData.info = allyInfo;
-            customData.stats = allyData.stats;
+            SetAllyData(allyInfo, allyData.stats);
+            SetPreviewImage(allyInfo.fullBodySprite);
 
             // TODO: Set all base stats
         }
 
         private void ClickMember(int index)
         {
-            AllyData allyData = allyDatas[index];
+            AllyData allyData = tempAllyDatas[index];
 
-            previewImage.sprite = allyData.info.fullBodySprite;
+            SetPreviewImage(allyData.info.fullBodySprite);
 
             // TODO: Set all base stats
         }
 
         private void ClickAddMember(int index)
         {
-            allyDatas[index] = customData;
-
-            teamContentPanel.GetChild(index).GetComponent<UIMemberIcon>().SetImage(customData.info.fullBodySprite);
-
             // TODO: Update current data to stats
             // TODO: Clean code
-            isAddCharacter = false;
-            addButton.GetComponentInChildren<TextMeshProUGUI>().text = "Add";
 
-            foreach (Transform child in teamContentPanel)
-            {
-                UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
-                member.DisableAddMember();
-            }
+            SetTeamMemberData(index, tempAllyData);
+            SetTeamMemberImage(index, tempAllyData.info.fullBodySprite);
+            SetButtonText(addButton, "Add");
+            SetEnableAddMember(false);
         }
 
         #endregion
 
+        #region Load Data
+
         private void LoadPreviewCharacter()
         {
-            previewImage.sprite = allies[0].fullBodySprite;
-
-            AllyInfo allyInfo = allies[0];
+            AllyInfo allyInfo = tempAllies[0];
             AllyData allyData = GetAllyDataInTeam(allyInfo.character);
 
-            customData.info = allyInfo;
-            customData.stats = allyData.stats;
+            SetAllyData(allyInfo, allyData.stats);
+            SetPreviewImage(allyInfo.fullBodySprite);
         }
 
         private void LoadCharacterIcon()
         {
             DestroyChildren(selectionContentPanel);
 
-            allies = AssetManager.instance.GetAllAllyInfo();
+            tempAllies = AssetManager.instance.GetAllAllyInfo();
 
             GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UICharacterIcon);
             int index = 0;
-            foreach (AllyInfo ally in allies)
+            foreach (AllyInfo ally in tempAllies)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, selectionContentPanel);
                 UICharacterIcon icon = uiTemp.GetComponent<UICharacterIcon>();
@@ -232,7 +220,7 @@ namespace NumGates.TestBattle
             GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UIMemberIcon);
             int index = 0;
 
-            foreach(AllyData allyData in allyDatas)
+            foreach(AllyData allyData in tempAllyDatas)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, teamContentPanel);
                 UIMemberIcon member = uiTemp.GetComponent<UIMemberIcon>();
@@ -242,24 +230,77 @@ namespace NumGates.TestBattle
             }
         }
 
-        #region Helper
         private void LoadAllyDatas()
         {
-            allyDatas.Clear();
-            allyDatas = levelManager.GetAllyDatas();
+            if(levelManager.GetAllyDatas().Count == maxTeamMember)
+            {
+                tempAllyDatas = levelManager.GetAllyDatas();
+            }
+            else
+            {
+                ResetAllyDatas();
+            }
+        }
 
-            if(allyDatas.Count == 0)
+        #endregion
+
+        #region Helper
+
+        private void SetPreviewImage(Sprite sprite)
+        {
+            previewImage.sprite = sprite;
+        }
+
+        private void SetAllyData(AllyInfo allyInfo, AllyStats allyStats)
+        {
+            tempAllyData.info = allyInfo;
+            tempAllyData.stats = allyStats;
+        }
+
+        private void SetButtonText(Button button, string text)
+        {
+            button.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        }
+
+        private void SetTeamMemberData(int index, AllyData allyData)
+        {
+            tempAllyDatas[index] = allyData;
+        }
+
+        private void SetTeamMemberImage(int index, Sprite sprite)
+        {
+            teamContentPanel.GetChild(index).GetComponent<UIMemberIcon>().SetImage(sprite);
+        }
+
+        private void SetEnableAddMember(bool isEnable)
+        {
+            isAddMember = isEnable;
+
+            foreach (Transform child in teamContentPanel)
+            {
+                UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
+
+                if (isEnable) { member.EnableAddMember(); }
+                else { member.DisableAddMember(); }
+            }
+        }
+
+        private void ResetAllyDatas()
+        {
+            tempAllyDatas.Clear();
+
+            if (tempAllyDatas.Count == 0)
             {
                 for (int index = 0; index < maxTeamMember; index++)
                 {
-                    allyDatas.Add(new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
+                    tempAllyDatas.Add(new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
                 }
             }
         }
 
         private AllyData GetAllyDataInTeam(CharacterAlly character)
         {
-            foreach(AllyData allyData in allyDatas)
+            foreach(AllyData allyData in tempAllyDatas)
             {
                 if(allyData.info.character == character)
                 {
@@ -268,6 +309,7 @@ namespace NumGates.TestBattle
             }
             return new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats());
         }
+
         private void DestroyChildren(Transform parent)
         {
             foreach(Transform child in parent)

@@ -110,12 +110,15 @@ namespace NumGates.TestBattle
             {
                 allyIndex++;
 
-                Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
-                spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
-                spawnedAlly.SetFlipX(true);
-                spawnedAlly.InitCharacter(this);
+                if(ally.info.character != CharacterAlly.EmptyAlly)
+                {
+                    Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
+                    spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
+                    spawnedAlly.SetFlipX(true);
+                    spawnedAlly.InitCharacter(this);
 
-                this.allies.Add(spawnedAlly);
+                    this.allies.Add(spawnedAlly);
+                }
             }
         }
 
