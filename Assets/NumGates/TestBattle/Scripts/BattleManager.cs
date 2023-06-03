@@ -106,6 +106,9 @@ namespace NumGates.TestBattle
             int allyIndex = 0;
             this.allies = new List<Character>();
 
+            RemoveAllCharacters(BattleGroup.Ally);
+            DestroyAllCharacters(BattleGroup.Ally);
+
             foreach (AllyData ally in allies)
             {
                 allyIndex++;
@@ -127,6 +130,9 @@ namespace NumGates.TestBattle
         {
             int enemyIndex = 0;
             this.enemies = new List<Character>();
+
+            RemoveAllCharacters(BattleGroup.Enemy);
+            DestroyAllCharacters(BattleGroup.Enemy);
 
             foreach (EnemyData enemy in enemies)
             {

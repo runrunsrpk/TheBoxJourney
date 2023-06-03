@@ -45,6 +45,12 @@ namespace NumGates.TestBattle
         public void InitUI()
         {
             levelManager = GameManager.instance.LevelManager;
+
+            addButton.interactable = false;
+            removeButton.interactable = false;
+            updateButton.interactable = false;
+            indexButton.interactable = false;
+            clearButton.interactable = false;
         }
 
         private void Awake()
@@ -105,17 +111,25 @@ namespace NumGates.TestBattle
             {
                 SetButtonText(addButton, "Cancel");
                 SetEnableAddMember(true);
+                SetEnableIconButton(false);
             }
             else
             {
                 SetButtonText(addButton, "Add");
                 SetEnableAddMember(false);
+                SetEnableIconButton(true);
             }
         }
 
         private void OnClickRemove()
         {
+            string indexText = indexButton.GetComponentInChildren<TextMeshProUGUI>().text;
+            int targetIndex = int.Parse(indexText.Split('-').GetValue(1).ToString());
 
+            SetTeamMemberData(targetIndex, new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
+            SetTeamMemberImage(targetIndex, null);
+
+            CheckAllyIndex(tempAllyData.info.character);
         }
 
         private void OnClickUpdate()
@@ -158,6 +172,7 @@ namespace NumGates.TestBattle
             SetAllyData(allyInfo, allyData.stats);
             SetPreviewImage(allyInfo.fullBodySprite);
 
+            CheckAllyIndex(allyInfo.character);
             // TODO: Set all base stats
         }
 
@@ -178,7 +193,12 @@ namespace NumGates.TestBattle
             SetTeamMemberData(index, tempAllyData);
             SetTeamMemberImage(index, tempAllyData.info.fullBodySprite);
             SetButtonText(addButton, "Add");
+            SetButtonText(indexButton, $"Index-{index}");
             SetEnableAddMember(false);
+            SetEnableIconButton(true);
+
+            CheckAllyIndex(tempAllyData.info.character);
+
         }
 
         #endregion
@@ -192,6 +212,8 @@ namespace NumGates.TestBattle
 
             SetAllyData(allyInfo, allyData.stats);
             SetPreviewImage(allyInfo.fullBodySprite);
+
+            CheckAllyIndex(allyInfo.character);
         }
 
         private void LoadCharacterIcon()
@@ -272,6 +294,15 @@ namespace NumGates.TestBattle
             teamContentPanel.GetChild(index).GetComponent<UIMemberIcon>().SetImage(sprite);
         }
 
+        private void SetEnableIconButton(bool isEnable)
+        {
+            foreach (Transform child in selectionContentPanel)
+            {
+                UICharacterIcon icon = child.gameObject.GetComponent<UICharacterIcon>();
+                icon.SetEnableButton(isEnable);
+            }
+        }
+
         private void SetEnableAddMember(bool isEnable)
         {
             isAddMember = isEnable;
@@ -283,6 +314,11 @@ namespace NumGates.TestBattle
                 if (isEnable) { member.EnableAddMember(); }
                 else { member.DisableAddMember(); }
             }
+        }
+
+        private void ResetAllyData()
+        {
+
         }
 
         private void ResetAllyDatas()
@@ -298,6 +334,18 @@ namespace NumGates.TestBattle
             }
         }
 
+        private int GetIndexInTeam(CharacterAlly character)
+        {
+            for(int index = 0; index < maxTeamMember; index++)
+            {
+                if(tempAllyDatas[index].info.character == character)
+                {
+                    return index;
+                }
+            }
+            return maxTeamMember;
+        }
+
         private AllyData GetAllyDataInTeam(CharacterAlly character)
         {
             foreach(AllyData allyData in tempAllyDatas)
@@ -308,6 +356,29 @@ namespace NumGates.TestBattle
                 }
             }
             return new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats());
+        }
+
+        private void CheckAllyIndex(CharacterAlly character)
+        {
+            int memberIndex = GetIndexInTeam(character);
+            if (memberIndex == maxTeamMember)
+            {
+                addButton.interactable = true;
+                removeButton.interactable = false;
+                updateButton.interactable = false;
+                indexButton.interactable = false;
+
+                SetButtonText(indexButton, $"Index-X");
+            }
+            else
+            {
+                addButton.interactable = false;
+                removeButton.interactable = true;
+                updateButton.interactable = true;
+                indexButton.interactable = true;
+
+                SetButtonText(indexButton, $"Index-{memberIndex}");
+            }
         }
 
         private void DestroyChildren(Transform parent)

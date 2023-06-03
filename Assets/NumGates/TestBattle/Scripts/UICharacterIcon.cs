@@ -34,6 +34,11 @@ namespace NumGates.TestBattle
             image.sprite = sprite;
         }
 
+        public void SetEnableButton(bool isEnable)
+        {
+            button.interactable = isEnable;
+        }
+
         private void OnClickIcon()
         {
             uiAllyManagement.OnClickIcon?.Invoke(index);
