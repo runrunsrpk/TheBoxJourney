@@ -1991,9 +1991,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1729880655652706919
 MonoBehaviour:
@@ -2054,3 +2054,4 @@ MonoBehaviour:
   startButton: {fileID: 1729880654299507296}
   stopButton: {fileID: 1729880653766056755}
   resetButton: {fileID: 1729880655422098227}
+  clearButton: {fileID: 0}
