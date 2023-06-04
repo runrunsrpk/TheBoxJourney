@@ -9,7 +9,7 @@ namespace NumGates
     [CreateAssetMenu(menuName = "Scriptable/Ally/AllyInfo", order = 0, fileName = "AllyInfo")]
     public class AllyInfo : ScriptableObject
     {
-        public CharacterAlly character;
+        public AllyCharacter character;
         public string allyName;
         public string allyStory;
         public Sprite iconSprite;

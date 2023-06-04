@@ -32,7 +32,7 @@ namespace NumGates.TestBattle
     {
         public Action<bool> OnBattleReady;
 
-        [SerializeField] private List<CharacterAlly> characterAllies;
+        [SerializeField] private List<AllyCharacter> characterAllies;
         [SerializeField] private List<CharacterEnemy> characterEnemies;
 
         [SerializeField] private TimerManager timerManagerPrefab;
@@ -123,6 +123,11 @@ namespace NumGates.TestBattle
         public List<AllyData> GetAllyDatas()
         {
             return allyDatas;
+        }
+
+        public void ResetAllyDatas()
+        {
+            allyDatas.Clear();
         }
         #endregion
 

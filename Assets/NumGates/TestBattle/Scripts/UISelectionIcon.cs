@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 namespace NumGates.TestBattle
 {
-    public class UICharacterIcon : MonoBehaviour
+    public class UISelectionIcon : MonoBehaviour
     {
         [SerializeField] private Button button;
         [SerializeField] private Image image;
 
-        private UIAllyManagement uiAllyManagement;
+        private IUIBaseManagement uiBaseManagement;
         private int index;
 
         private void Awake()
@@ -23,9 +23,9 @@ namespace NumGates.TestBattle
             button.onClick.RemoveListener(OnClickIcon);
         }
 
-        public void InitUI(UIAllyManagement uiAllyManagement, int index)
+        public void InitUI(IUIBaseManagement uiBaseManagement, int index)
         {
-            this.uiAllyManagement = uiAllyManagement;
+            this.uiBaseManagement = uiBaseManagement;
             this.index = index;
         }
 
@@ -41,7 +41,8 @@ namespace NumGates.TestBattle
 
         private void OnClickIcon()
         {
-            uiAllyManagement.OnClickIcon?.Invoke(index);
+            //uiBaseManagement.OnClickIcon?.Invoke(index);
+            uiBaseManagement.OnClickSelection?.Invoke(index);
         }
     }
 }

@@ -7,387 +7,222 @@ using UnityEngine.UI;
 
 namespace NumGates.TestBattle
 {
-    public class UIAllyManagement : MonoBehaviour
+    public class UIAllyManagement : UIBaseManagement<AllyInfo, AllyData, AllyCharacter>
     {
-        public Action<int> OnClickIcon;
-        public Action<int> OnClickTeamMember;
-        public Action<int> OnClickAddTeamMember;
-
-        [Header("Control Group")]
-        [SerializeField] private Image previewImage;
-        [SerializeField] private Button addButton;
-        [SerializeField] private Button removeButton;
-        [SerializeField] private Button updateButton;
-        [SerializeField] private Button indexButton;
-
-        //[Header("Customize Group")]
-
-        //[Header("Detail Group")]
-
-        [Header("Selection Group")]
-        [SerializeField] private Transform selectionContentPanel;
-
-        [Header("Team Group")]
-        [SerializeField] private int maxTeamMember;
-        [SerializeField] private Button saveButton;
-        [SerializeField] private Button clearButton;
-        [SerializeField] private Button exitButton;
-        [SerializeField] private Transform teamContentPanel;
-        //[SerializeField] private GameObject uiCharacterIndexPref;
-
-        private LevelManager levelManager;
-
-        private List<AllyInfo> tempAllies = new List<AllyInfo>();
-        private List<AllyData> tempAllyDatas = new List<AllyData>();
-
-        private AllyData tempAllyData;
-
-        public void InitUI()
+        #region Action
+        protected override void ClickSelection(int index) 
         {
-            levelManager = GameManager.instance.LevelManager;
+            AllyInfo allyInfo = tempInfos[index];
+            AllyData allyPositionData = GetPositionData(allyInfo.character);
 
-            addButton.interactable = false;
-            removeButton.interactable = false;
-            updateButton.interactable = false;
-            indexButton.interactable = false;
-            clearButton.interactable = false;
+            // Replace stats data from position data if any
+            AllyData allyData = GetInstanceData();
+            allyData.info = allyInfo;
+            allyData.stats = allyPositionData.stats;
+
+            SetData(allyData);
+            SetPreviewImage(allyData.info.fullBodySprite);
+
+            CheckPositionIndex(allyData.info.character);
         }
 
-        private void Awake()
+        protected override void ClickPosition(int index, bool isNew) 
         {
-            OnClickIcon += ClickIcon;
-            OnClickTeamMember += ClickMember;
-            OnClickAddTeamMember += ClickAddMember;
+            base.ClickPosition(index, isNew);
 
-            addButton.onClick.AddListener(OnClickAdd);
-            removeButton.onClick.AddListener(OnClickRemove);
-
-            saveButton.onClick.AddListener(OnClickSave);
-            clearButton.onClick.AddListener(OnClickClear);
-            exitButton.onClick.AddListener(OnClickExit);
-        }
-
-        private void OnDestroy()
-        {
-            addButton.onClick.RemoveListener(OnClickAdd);
-            removeButton.onClick.RemoveListener(OnClickRemove);
-
-            saveButton.onClick.RemoveListener(OnClickSave);
-            clearButton.onClick.RemoveListener(OnClickClear);
-            exitButton.onClick.RemoveListener(OnClickExit);
-        }
-
-        #region Team Button
-        private void OnClickExit()
-        {
-            Hide();
-        }
-
-        private void OnClickSave()
-        {
-            levelManager.InitAllyCharacter(tempAllyDatas);
-        }
-
-        private void OnClickClear()
-        {
-            ResetAllyDatas();
-
-            for(int index = 0; index < maxTeamMember; index++)
+            if(isNew == true)
             {
-                SetTeamMemberData(index, tempAllyDatas[index]);
-                SetTeamMemberImage(index, null);
-            }
-        }
-        #endregion
+                SetPositionData(index, tempData);
+                SetPositionImage(index, tempData.info.fullBodySprite);
 
-        #region Control Button
-
-        private bool isAddMember = false;
-
-        // TODO: Load ally data to custom data
-        private void OnClickAdd()
-        {
-            if(isAddMember == false)
-            {
-                SetButtonText(addButton, "Cancel");
-                SetEnableAddMember(true);
-                SetEnableIconButton(false);
+                CheckPositionIndex(tempData.info.character);
             }
             else
             {
-                SetButtonText(addButton, "Add");
-                SetEnableAddMember(false);
-                SetEnableIconButton(true);
+                AllyData allyData = tempDatas[index];
+
+                SetPreviewImage(allyData.info.fullBodySprite);
             }
         }
-
-        private void OnClickRemove()
-        {
-            string indexText = indexButton.GetComponentInChildren<TextMeshProUGUI>().text;
-            int targetIndex = int.Parse(indexText.Split('-').GetValue(1).ToString());
-
-            SetTeamMemberData(targetIndex, new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
-            SetTeamMemberImage(targetIndex, null);
-
-            CheckAllyIndex(tempAllyData.info.character);
-        }
-
-        private void OnClickUpdate()
-        {
-
-        }
-
-        private void OnClickIndex()
-        {
-
-        }
-
         #endregion
 
-        #region Show and Hide
-
-        public void Hide()
+        #region Init
+        public override void InitUI()
         {
-            gameObject.SetActive(false);
+            base.InitUI();
         }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-
-            LoadCharacterIcon();
-            LoadCharacterMember();
-            LoadPreviewCharacter();
-        }
-
         #endregion
 
-        #region Action
-
-        private void ClickIcon(int index)
+        #region Data Handler
+        protected override void LoadControlData() 
         {
-            AllyInfo allyInfo = tempAllies[index];
-            AllyData allyData = GetAllyDataInTeam(allyInfo.character);
+            AllyInfo allyInfo = tempInfos[0];
+            AllyData allyPositionData = GetPositionData(allyInfo.character);
 
-            SetAllyData(allyInfo, allyData.stats);
-            SetPreviewImage(allyInfo.fullBodySprite);
+            // Replace stats data from position data if any
+            AllyData allyData = GetInstanceData();
+            allyData.info = allyInfo;
+            allyData.stats = allyPositionData.stats;
 
-            CheckAllyIndex(allyInfo.character);
-            // TODO: Set all base stats
-        }
-
-        private void ClickMember(int index)
-        {
-            AllyData allyData = tempAllyDatas[index];
-
+            SetData(allyData);
             SetPreviewImage(allyData.info.fullBodySprite);
 
-            // TODO: Set all base stats
+            CheckPositionIndex(tempData.info.character);
         }
 
-        private void ClickAddMember(int index)
+        protected override void LoadCustomizeData() { }
+
+        protected override void LoadDetailData() { }
+
+        protected override void LoadSelectionData() 
         {
-            // TODO: Update current data to stats
-            // TODO: Clean code
+            DestroyChildrenContent(selectionContentPanel);
 
-            SetTeamMemberData(index, tempAllyData);
-            SetTeamMemberImage(index, tempAllyData.info.fullBodySprite);
-            SetButtonText(addButton, "Add");
-            SetButtonText(indexButton, $"Index-{index}");
-            SetEnableAddMember(false);
-            SetEnableIconButton(true);
-
-            CheckAllyIndex(tempAllyData.info.character);
-
-        }
-
-        #endregion
-
-        #region Load Data
-
-        private void LoadPreviewCharacter()
-        {
-            AllyInfo allyInfo = tempAllies[0];
-            AllyData allyData = GetAllyDataInTeam(allyInfo.character);
-
-            SetAllyData(allyInfo, allyData.stats);
-            SetPreviewImage(allyInfo.fullBodySprite);
-
-            CheckAllyIndex(allyInfo.character);
-        }
-
-        private void LoadCharacterIcon()
-        {
-            DestroyChildren(selectionContentPanel);
-
-            tempAllies = AssetManager.instance.GetAllAllyInfo();
-
-            GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UICharacterIcon);
+            GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UISelectionIcon);
             int index = 0;
-            foreach (AllyInfo ally in tempAllies)
+
+            foreach (AllyInfo ally in tempInfos)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, selectionContentPanel);
-                UICharacterIcon icon = uiTemp.GetComponent<UICharacterIcon>();
+                UISelectionIcon icon = uiTemp.GetComponent<UISelectionIcon>();
                 icon.InitUI(this, index);
                 icon.SetImage(ally.iconSprite);
                 index++;
             }
         }
 
-        private void LoadCharacterMember()
+        protected override void LoadPositionData() 
         {
-            DestroyChildren(teamContentPanel);
-            LoadAllyDatas();
+            DestroyChildrenContent(positionContentPanel);
+            LoadDatas();
 
-            GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UIMemberIcon);
+            GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UIPositionIcon);
             int index = 0;
 
-            foreach(AllyData allyData in tempAllyDatas)
+            foreach (AllyData allyData in tempDatas)
             {
-                GameObject uiTemp = Instantiate(uiPrefab, teamContentPanel);
-                UIMemberIcon member = uiTemp.GetComponent<UIMemberIcon>();
+                GameObject uiTemp = Instantiate(uiPrefab, positionContentPanel);
+                UIPositionIcon member = uiTemp.GetComponent<UIPositionIcon>();
                 member.InitUI(this, index);
-                member.SetImage(allyData.info.character != CharacterAlly.EmptyAlly ? allyData.info.fullBodySprite : null);
+                member.SetImage(allyData.info.character != AllyCharacter.EmptyAlly ? allyData.info.fullBodySprite : null);
                 index++;
             }
         }
 
-        private void LoadAllyDatas()
+        protected override void LoadDatas() 
         {
-            if(levelManager.GetAllyDatas().Count == maxTeamMember)
+            tempInfos = AssetManager.instance.GetAllAllyInfo();
+
+            if (levelManager.GetAllyDatas().Count == maxPosition)
             {
-                tempAllyDatas = levelManager.GetAllyDatas();
+                SetEnablePositionButtons(true, true, true);
+                tempDatas = levelManager.GetAllyDatas();
             }
             else
             {
-                ResetAllyDatas();
+                SetEnablePositionButtons(true, false, true);
+                ResetDatas();
             }
         }
+        #endregion
 
+        #region Control Group
+        protected override void OnClickAdd() 
+        {
+            base.OnClickAdd();
+        }
+
+        protected override void OnClickRemove() 
+        {
+            base.OnClickRemove();
+            CheckPositionIndex(tempData.info.character);
+        }
+
+        protected override void OnClickUpdate() { }
+
+        protected override void OnClickIndex() { }
+        #endregion
+
+        #region Customize Group
+        #endregion
+
+        #region Detail Group
+        #endregion
+
+        #region Selection Group
+        #endregion
+
+        #region Position Group
+        protected override void OnClickSave() 
+        {
+            // Init to reset spawned character
+            levelManager.InitAllyCharacter(tempDatas);
+
+            if (isClearDatas == true) { levelManager.ResetAllyDatas(); }
+
+            base.OnClickSave();
+        }
+
+        protected override void OnClickClear() 
+        {
+            base.OnClickClear();
+        }
+
+        protected override void OnClickExit() 
+        {
+            base.OnClickExit();
+        }
         #endregion
 
         #region Helper
 
-        private void SetPreviewImage(Sprite sprite)
+        #region Getting
+        protected override AllyData GetInstanceData()
         {
-            previewImage.sprite = sprite;
+            return new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats());
         }
 
-        private void SetAllyData(AllyInfo allyInfo, AllyStats allyStats)
+        protected override int GetPositionIndex(AllyCharacter reference)
         {
-            tempAllyData.info = allyInfo;
-            tempAllyData.stats = allyStats;
-        }
-
-        private void SetButtonText(Button button, string text)
-        {
-            button.GetComponentInChildren<TextMeshProUGUI>().text = text;
-        }
-
-        private void SetTeamMemberData(int index, AllyData allyData)
-        {
-            tempAllyDatas[index] = allyData;
-        }
-
-        private void SetTeamMemberImage(int index, Sprite sprite)
-        {
-            teamContentPanel.GetChild(index).GetComponent<UIMemberIcon>().SetImage(sprite);
-        }
-
-        private void SetEnableIconButton(bool isEnable)
-        {
-            foreach (Transform child in selectionContentPanel)
+            for (int index = 0; index < maxPosition; index++)
             {
-                UICharacterIcon icon = child.gameObject.GetComponent<UICharacterIcon>();
-                icon.SetEnableButton(isEnable);
-            }
-        }
-
-        private void SetEnableAddMember(bool isEnable)
-        {
-            isAddMember = isEnable;
-
-            foreach (Transform child in teamContentPanel)
-            {
-                UIMemberIcon member = child.gameObject.GetComponent<UIMemberIcon>();
-
-                if (isEnable) { member.EnableAddMember(); }
-                else { member.DisableAddMember(); }
-            }
-        }
-
-        private void ResetAllyData()
-        {
-
-        }
-
-        private void ResetAllyDatas()
-        {
-            tempAllyDatas.Clear();
-
-            if (tempAllyDatas.Count == 0)
-            {
-                for (int index = 0; index < maxTeamMember; index++)
-                {
-                    tempAllyDatas.Add(new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats()));
-                }
-            }
-        }
-
-        private int GetIndexInTeam(CharacterAlly character)
-        {
-            for(int index = 0; index < maxTeamMember; index++)
-            {
-                if(tempAllyDatas[index].info.character == character)
+                if (tempDatas[index].info.character == reference)
                 {
                     return index;
                 }
             }
-            return maxTeamMember;
+
+            return maxPosition;
         }
 
-        private AllyData GetAllyDataInTeam(CharacterAlly character)
+        protected override AllyData GetPositionData(AllyCharacter reference)
         {
-            foreach(AllyData allyData in tempAllyDatas)
+            foreach (AllyData allyData in tempDatas)
             {
-                if(allyData.info.character == character)
+                if (allyData.info.character == reference)
                 {
                     return allyData;
                 }
             }
-            return new AllyData(ScriptableObject.CreateInstance("AllyInfo") as AllyInfo, new AllyStats());
-        }
 
-        private void CheckAllyIndex(CharacterAlly character)
+            return GetInstanceData();
+        }
+        #endregion
+
+        #region Other
+        protected override bool IsPositionDatasEmpty()
         {
-            int memberIndex = GetIndexInTeam(character);
-            if (memberIndex == maxTeamMember)
+            foreach(AllyData allyData in tempDatas)
             {
-                addButton.interactable = true;
-                removeButton.interactable = false;
-                updateButton.interactable = false;
-                indexButton.interactable = false;
-
-                SetButtonText(indexButton, $"Index-X");
+                if(allyData.info.character != AllyCharacter.EmptyAlly)
+                {
+                    return false;
+                }
             }
-            else
-            {
-                addButton.interactable = false;
-                removeButton.interactable = true;
-                updateButton.interactable = true;
-                indexButton.interactable = true;
 
-                SetButtonText(indexButton, $"Index-{memberIndex}");
-            }
+            return true;
         }
-
-        private void DestroyChildren(Transform parent)
-        {
-            foreach(Transform child in parent)
-            {
-                Destroy(child.gameObject);
-            }
-        }
+        #endregion
 
         #endregion
     }

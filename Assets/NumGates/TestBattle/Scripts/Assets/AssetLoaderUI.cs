@@ -14,8 +14,8 @@ namespace NumGates.TestBattle
         public static readonly string UITimerGauge = "UITimerGauge";
         public static readonly string UIHealthGauge = "UIHealthGauge";
         public static readonly string UIAllyManagement = "UIAllyManagement";
-        public static readonly string UICharacterIcon = "UICharacterIcon";
-        public static readonly string UIMemberIcon = "UIMemberIcon";
+        public static readonly string UISelectionIcon = "UISelectionIcon";
+        public static readonly string UIPositionIcon = "UIPositionIcon";
     }
 
     public class AssetLoaderUI : AssetLoader, IAssetLoader

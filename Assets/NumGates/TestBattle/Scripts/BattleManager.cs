@@ -55,7 +55,7 @@ namespace NumGates.TestBattle
         #region Character Management
 
         // Bypass InitCharacter from LevelManager
-        public void InitCharacter(List<CharacterAlly> allies, List<CharacterEnemy> enemies)
+        public void InitCharacter(List<AllyCharacter> allies, List<CharacterEnemy> enemies)
         {
             int enemyIndex = 0;
             this.enemies = new List<Character>();
@@ -74,7 +74,7 @@ namespace NumGates.TestBattle
             int allyIndex = 0;
             this.allies = new List<Character>();
 
-            foreach (CharacterAlly ally in allies)
+            foreach (AllyCharacter ally in allies)
             {
                 allyIndex++;
 
@@ -113,7 +113,7 @@ namespace NumGates.TestBattle
             {
                 allyIndex++;
 
-                if(ally.info.character != CharacterAlly.EmptyAlly)
+                if(ally.info.character != AllyCharacter.EmptyAlly)
                 {
                     Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
                     spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));

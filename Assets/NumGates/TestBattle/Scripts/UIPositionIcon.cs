@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace NumGates.TestBattle
 {
-    public class UIMemberIcon : MonoBehaviour
+    public class UIPositionIcon : MonoBehaviour
     {
         [SerializeField] private Button button;
         [SerializeField] private Image image;
 
-        private UIAllyManagement uiAllyManagement;
+        private IUIBaseManagement uiBaseManagement;
         private int index;
-        private bool isAddCharacter = false;
+        private bool isEnable = false;
 
         private void Awake()
         {
@@ -24,9 +24,9 @@ namespace NumGates.TestBattle
             button.onClick.RemoveListener(OnClickTeamMember);
         }
 
-        public void InitUI(UIAllyManagement uiAllyManagement, int index)
+        public void InitUI(IUIBaseManagement uiBaseManagement, int index)
         {
-            this.uiAllyManagement = uiAllyManagement;
+            this.uiBaseManagement = uiBaseManagement;
             this.index = index;
         }
 
@@ -35,30 +35,32 @@ namespace NumGates.TestBattle
             image.sprite = sprite;
         }
 
-        public void EnableAddMember()
+        public void EnablePosition()
         {
-            isAddCharacter = true;
+            isEnable = true;
 
             button.GetComponent<Image>().color = Color.green;
         }
 
-        public void DisableAddMember()
+        public void DisablePosition()
         {
-            isAddCharacter = false;
+            isEnable = false;
 
             button.GetComponent<Image>().color = Color.white;
         }
 
         private void OnClickTeamMember()
         {
-            if(isAddCharacter == false)
-            {
-                uiAllyManagement.OnClickTeamMember?.Invoke(index);
-            }
-            else
-            {
-                uiAllyManagement.OnClickAddTeamMember?.Invoke(index);
-            }
+            //if(isEnable == false)
+            //{
+            //    uiBaseManagement.OnClickTeamMember?.Invoke(index);
+            //}
+            //else
+            //{
+            //    uiBaseManagement.OnClickAddTeamMember?.Invoke(index);
+            //}
+
+            uiBaseManagement.OnClickPosition?.Invoke(index, isEnable);
         }
     }
 }

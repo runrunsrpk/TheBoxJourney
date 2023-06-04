@@ -9,7 +9,7 @@ namespace NumGates.TestBattle
     {
         private Dictionary<string, AllyInfo> cache = new Dictionary<string, AllyInfo>();
 
-        public AllyInfo GetAsset(CharacterAlly ally)
+        public AllyInfo GetAsset(AllyCharacter ally)
         {
             string guid = GetAssetGUID($"{ally}Info", assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;

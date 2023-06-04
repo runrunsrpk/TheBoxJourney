@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 
 namespace NumGates.TestBattle
 {
-    public enum CharacterAlly
+    public enum AllyCharacter
     {
         EmptyAlly,
         RedAlly,
@@ -19,7 +19,7 @@ namespace NumGates.TestBattle
     {
         private Dictionary<string, GameObject> cache = new Dictionary<string, GameObject>();
 
-        public GameObject GetAsset(CharacterAlly ally)
+        public GameObject GetAsset(AllyCharacter ally)
         {
             string guid = GetAssetGUID(ally.ToString(), assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;

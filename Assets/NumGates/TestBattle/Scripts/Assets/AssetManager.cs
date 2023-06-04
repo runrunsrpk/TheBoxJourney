@@ -68,14 +68,14 @@ namespace NumGates.TestBattle
 
         #region Character Asset
 
-        public GameObject GetAllyCharacter(CharacterAlly ally) => assetLoaderAlly.GetAsset(ally);
+        public GameObject GetAllyCharacter(AllyCharacter ally) => assetLoaderAlly.GetAsset(ally);
         public GameObject GetEnemyCharacter(CharacterEnemy enemy) => assetLoaderEnemy.GetAsset(enemy);
 
         #endregion
 
         #region Database Asset
 
-        public AllyInfo GetAllyInfo(CharacterAlly ally) => assetLoaderAllyInfo.GetAsset(ally);
+        public AllyInfo GetAllyInfo(AllyCharacter ally) => assetLoaderAllyInfo.GetAsset(ally);
         public List<AllyInfo> GetAllAllyInfo() => assetLoaderAllyInfo.GetAllAssets();
         #endregion
     }
