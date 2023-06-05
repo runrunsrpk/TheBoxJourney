@@ -42,7 +42,8 @@ namespace NumGates.TestBattle
         Defender,
         Energetic,
         Beaster,
-        Souleaver
+        Souleaver,
+        Balance
     }
 
     public enum GrowthPath

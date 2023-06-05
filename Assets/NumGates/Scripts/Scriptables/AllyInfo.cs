@@ -27,6 +27,7 @@ namespace NumGates
         public SecondaryStatus energeticStyle;
         public SecondaryStatus beasterStyle;
         public SecondaryStatus souleaverStyle;
+        public SecondaryStatus balanceStyle;
     }
 }
 

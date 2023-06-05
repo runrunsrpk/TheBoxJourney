@@ -25,15 +25,22 @@ namespace NumGates.TestBattle
 
     public struct EnemyData
     {
-        public CharacterEnemy character;
+        public EnemyInfo info;
+        public EnemyStats stats;
+
+        public EnemyData(EnemyInfo info, EnemyStats stats)
+        {
+            this.info = info;
+            this.stats = stats;
+        }
     }
 
     public class LevelManager : MonoBehaviour
     {
         public Action<bool> OnBattleReady;
 
-        [SerializeField] private List<AllyCharacter> characterAllies;
-        [SerializeField] private List<CharacterEnemy> characterEnemies;
+        //[SerializeField] private List<AllyCharacter> characterAllies;
+        //[SerializeField] private List<EnemyCharacter> characterEnemies;
 
         [SerializeField] private TimerManager timerManagerPrefab;
         [SerializeField] private BattleManager battleManagerPrefab;
