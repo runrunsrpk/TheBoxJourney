@@ -231,6 +231,11 @@ namespace NumGates.TestBattle
             previewImage.sprite = sprite;
         }
 
+        protected void SetIndexButtonText(string text)
+        {
+            SetButtonText(indexButton, $"Index-{text}");
+        }
+
         protected void SetButtonText(Button button, string text)
         {
             button.GetComponentInChildren<TextMeshProUGUI>().text = text;

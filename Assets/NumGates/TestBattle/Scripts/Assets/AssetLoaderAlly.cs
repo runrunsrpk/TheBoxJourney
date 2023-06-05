@@ -8,11 +8,11 @@ namespace NumGates.TestBattle
 {
     public enum AllyCharacter
     {
-        EmptyAlly,
-        RedAlly,
-        OrangeAlly,
-        YellowAlly,
-        GreenAlly
+        ALY000,
+        ALY001,
+        ALY002,
+        ALY003,
+        ALY005
     }
 
     public class AssetLoaderAlly : AssetLoader, IAssetLoader

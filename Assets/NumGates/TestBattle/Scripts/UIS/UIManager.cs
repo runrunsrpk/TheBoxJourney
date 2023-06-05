@@ -26,6 +26,23 @@ namespace NumGates.TestBattle
         }
         private UIAllyManagement uiAllyManagement;
 
+        public UIEnemyManagement UIEnemyManagement
+        {
+            get
+            {
+                if (uiEnemyManagement == null)
+                {
+                    GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UIEnemyManagement));
+                    uiEnemyManagement = uiTemp.GetComponent<UIEnemyManagement>();
+                    uiEnemyManagement.InitUI();
+                    uiEnemyManagement.Hide();
+                }
+
+                return uiEnemyManagement;
+            }
+        }
+        private UIEnemyManagement uiEnemyManagement;
+
         public void InitManager()
         {
             if (uiBattleEvent == null)

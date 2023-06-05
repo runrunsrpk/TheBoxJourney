@@ -38,10 +38,15 @@ MonoBehaviour:
     m_SerializedLabels:
     - Enemy
   - m_GUID: 3283ef7d3a22d5840a5cc1acfe87854d
-    m_Address: AllyInfos
+    m_Address: AllyInfo
     m_ReadOnly: 0
     m_SerializedLabels:
     - AllyInfo
+  - m_GUID: 5d20bfa4edb991744b1dc0c125c19fe4
+    m_Address: EnemyInfo
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - EnemyInfo
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 02f1d237c5f19f740b9b5822761e589f, type: 2}
   m_SchemaSet:

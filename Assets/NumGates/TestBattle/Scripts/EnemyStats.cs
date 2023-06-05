@@ -6,6 +6,7 @@ namespace NumGates.TestBattle
 {
     public struct EnemyStats
     {
+        public float statusMultiplier;
         public PrimaryStatus primaryStatus;
         public SecondaryStatus secondaryStatus;
     }

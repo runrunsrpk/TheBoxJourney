@@ -29,8 +29,11 @@ namespace NumGates.TestBattle
 
         private void Awake()
         {
+            // Add onClick "Battle Setup Group"
             allyButton.onClick.AddListener(OnClickAlly);
+            enemyButton.onClick.AddListener(OnClickEnemy);
 
+            // Add onClick "Battle Controller Group"
             startButton.onClick.AddListener(OnClickStart);
             stopButton.onClick.AddListener(OnClickStop);
             resetButton.onClick.AddListener(OnClickReset);
@@ -45,8 +48,11 @@ namespace NumGates.TestBattle
 
         private void OnDestroy()
         {
+            // Remove onClick "Battle Setup Group"
             allyButton.onClick.RemoveListener(OnClickAlly);
+            enemyButton.onClick.RemoveListener(OnClickEnemy);
 
+            // Remove onClick "Battle Controller Group"
             startButton.onClick.RemoveListener(OnClickStart);
             stopButton.onClick.RemoveListener(OnClickStop);
             resetButton.onClick.RemoveListener(OnClickReset);
@@ -79,6 +85,8 @@ namespace NumGates.TestBattle
         public void OnClickEnemy()
         {
             Debug.Log($"Click 'ENEMY' button");
+
+            uiManager.UIEnemyManagement.Show();
         }
 
         public void OnClickOption()

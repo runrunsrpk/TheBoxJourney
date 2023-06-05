@@ -8,10 +8,10 @@ namespace NumGates.TestBattle
 {
     public enum EnemyCharacter
     {
-        EmptyEnemy,
-        Enemy01,
-        Enemy02,
-        Enemy03
+        ENE000,
+        ENE001,
+        ENE002,
+        ENE003
     }
 
     public class AssetLoaderEnemy : AssetLoader, IAssetLoader

@@ -11,7 +11,7 @@ namespace NumGates.TestBattle
 
         public EnemyInfo GetAsset(EnemyCharacter enemy)
         {
-            string guid = GetAssetGUID($"{enemy}Info", assetFormat);
+            string guid = GetAssetGUID($"{enemy}_Info", assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;
         }
 

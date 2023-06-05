@@ -20,6 +20,7 @@ namespace NumGates.TestBattle
         [SerializeField] private AssetLoaderAlly assetLoaderAlly;
         [SerializeField] private AssetLoaderEnemy assetLoaderEnemy;
         [SerializeField] private AssetLoaderAllyInfo assetLoaderAllyInfo;
+        [SerializeField] private AssetLoaderEnemyInfo assetLoaderEnemyInfo;
 
         [Header("UI Reference")]
         [SerializeField] private AssetLabelReference uiLable;
@@ -30,6 +31,7 @@ namespace NumGates.TestBattle
 
         [Header("Database Reference")]
         [SerializeField] private AssetLabelReference allyInfoLable;
+        [SerializeField] private AssetLabelReference enemyInfoLable;
 
         private void Awake()
         {
@@ -50,6 +52,7 @@ namespace NumGates.TestBattle
             yield return StartCoroutine(assetLoaderAlly.LoadAssets(allyLable));
             yield return StartCoroutine(assetLoaderAllyInfo.LoadAssets(allyInfoLable));
             yield return StartCoroutine(assetLoaderEnemy.LoadAssets(enemyLable));
+            yield return StartCoroutine(assetLoaderEnemyInfo.LoadAssets(enemyInfoLable));
 
             OnLoadComplete?.Invoke();
         }
@@ -77,6 +80,9 @@ namespace NumGates.TestBattle
 
         public AllyInfo GetAllyInfo(AllyCharacter ally) => assetLoaderAllyInfo.GetAsset(ally);
         public List<AllyInfo> GetAllAllyInfo() => assetLoaderAllyInfo.GetAllAssets();
+
+        public EnemyInfo GetEnemyInfo(EnemyCharacter enemy) => assetLoaderEnemyInfo.GetAsset(enemy);
+        public List<EnemyInfo> GetAllEnemyInfo() => assetLoaderEnemyInfo.GetAllAssets();
         #endregion
     }
 }

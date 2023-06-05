@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8379901445202459295}
   - component: {fileID: 8379901445202459294}
   m_Layer: 0
-  m_Name: Enemy02
+  m_Name: ENE003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,7 +184,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 1366265995, guid: 977d29954b7031549ae321e6db0a03fc, type: 3}
-  m_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+  m_Color: {r: 0.8584906, g: 0.09313814, b: 0.60737973, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -16,12 +16,12 @@ namespace NumGates.TestBattle
 
         private void Awake()
         {
-            button.onClick.AddListener(OnClickTeamMember);
+            button.onClick.AddListener(OnClickPosition);
         }
 
         private void OnDestroy()
         {
-            button.onClick.RemoveListener(OnClickTeamMember);
+            button.onClick.RemoveListener(OnClickPosition);
         }
 
         public void InitUI(IUIBaseManagement uiBaseManagement, int index)
@@ -49,17 +49,8 @@ namespace NumGates.TestBattle
             button.GetComponent<Image>().color = Color.white;
         }
 
-        private void OnClickTeamMember()
+        private void OnClickPosition()
         {
-            //if(isEnable == false)
-            //{
-            //    uiBaseManagement.OnClickTeamMember?.Invoke(index);
-            //}
-            //else
-            //{
-            //    uiBaseManagement.OnClickAddTeamMember?.Invoke(index);
-            //}
-
             uiBaseManagement.OnClickPosition?.Invoke(index, isEnable);
         }
     }

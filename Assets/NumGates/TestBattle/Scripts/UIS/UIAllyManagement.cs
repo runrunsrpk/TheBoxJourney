@@ -12,24 +12,22 @@ namespace NumGates.TestBattle
         #region Action
         protected override void ClickSelection(int index) 
         {
-            AllyInfo allyInfo = tempInfos[index];
-            AllyData allyPositionData = GetPositionData(allyInfo.character);
+            AllyInfo info = tempInfos[index];
+            AllyData positionData = GetPositionData(info.character);
 
             // Replace stats data from position data if any
-            AllyData allyData = GetInstanceData();
-            allyData.info = allyInfo;
-            allyData.stats = allyPositionData.stats;
+            AllyData data = GetInstanceData();
+            data.info = info;
+            data.stats = positionData.stats;
 
-            SetData(allyData);
-            SetPreviewImage(allyData.info.fullBodySprite);
+            SetData(data);
+            SetPreviewImage(data.info.fullBodySprite);
 
-            CheckPositionIndex(allyData.info.character);
+            CheckPositionIndex(data.info.character);
         }
 
         protected override void ClickPosition(int index, bool isNew) 
         {
-            base.ClickPosition(index, isNew);
-
             if(isNew == true)
             {
                 SetPositionData(index, tempData);
@@ -39,10 +37,23 @@ namespace NumGates.TestBattle
             }
             else
             {
-                AllyData allyData = tempDatas[index];
+                AllyData data = tempDatas[index];
 
-                SetPreviewImage(allyData.info.fullBodySprite);
+                if(data.info.character != AllyCharacter.ALY000)
+                {
+                    SetPreviewImage(data.info.fullBodySprite);
+                    SetEnableControlButtons(false, true, true, true);
+                    SetIndexButtonText($"{index}");
+                }
+                else
+                {
+                    SetPreviewImage(null);
+                    SetEnableControlButtons(false, false, false, false);
+                    SetIndexButtonText("X");
+                }
             }
+
+            base.ClickPosition(index, isNew);
         }
         #endregion
 
@@ -56,18 +67,18 @@ namespace NumGates.TestBattle
         #region Data Handler
         protected override void LoadControlData() 
         {
-            AllyInfo allyInfo = tempInfos[0];
-            AllyData allyPositionData = GetPositionData(allyInfo.character);
+            AllyInfo info = tempInfos[0];
+            AllyData positionData = GetPositionData(info.character);
 
             // Replace stats data from position data if any
-            AllyData allyData = GetInstanceData();
-            allyData.info = allyInfo;
-            allyData.stats = allyPositionData.stats;
+            AllyData data = GetInstanceData();
+            data.info = info;
+            data.stats = positionData.stats;
 
-            SetData(allyData);
-            SetPreviewImage(allyData.info.fullBodySprite);
+            SetData(data);
+            SetPreviewImage(data.info.fullBodySprite);
 
-            CheckPositionIndex(tempData.info.character);
+            CheckPositionIndex(data.info.character);
         }
 
         protected override void LoadCustomizeData() { }
@@ -81,12 +92,12 @@ namespace NumGates.TestBattle
             GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UISelectionIcon);
             int index = 0;
 
-            foreach (AllyInfo ally in tempInfos)
+            foreach (AllyInfo info in tempInfos)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, selectionContentPanel);
                 UISelectionIcon icon = uiTemp.GetComponent<UISelectionIcon>();
                 icon.InitUI(this, index);
-                icon.SetImage(ally.iconSprite);
+                icon.SetImage(info.iconSprite);
                 index++;
             }
         }
@@ -99,12 +110,12 @@ namespace NumGates.TestBattle
             GameObject uiPrefab = AssetManager.instance.GetUI(UIReference.UIPositionIcon);
             int index = 0;
 
-            foreach (AllyData allyData in tempDatas)
+            foreach (AllyData data in tempDatas)
             {
                 GameObject uiTemp = Instantiate(uiPrefab, positionContentPanel);
-                UIPositionIcon member = uiTemp.GetComponent<UIPositionIcon>();
-                member.InitUI(this, index);
-                member.SetImage(allyData.info.character != AllyCharacter.EmptyAlly ? allyData.info.fullBodySprite : null);
+                UIPositionIcon icon = uiTemp.GetComponent<UIPositionIcon>();
+                icon.InitUI(this, index);
+                icon.SetImage(data.info.character != AllyCharacter.ALY000 ? data.info.fullBodySprite : null);
                 index++;
             }
         }
@@ -214,7 +225,7 @@ namespace NumGates.TestBattle
         {
             foreach(AllyData allyData in tempDatas)
             {
-                if(allyData.info.character != AllyCharacter.EmptyAlly)
+                if(allyData.info.character != AllyCharacter.ALY000)
                 {
                     return false;
                 }

@@ -117,7 +117,6 @@ namespace NumGates.TestBattle
         #endregion
 
         #region Ally Data
-
         public void InitAllyCharacter(List<AllyData> allyDatas)
         {
             this.allyDatas = allyDatas;
@@ -139,7 +138,6 @@ namespace NumGates.TestBattle
         #endregion
 
         #region Enemy Data
-
         public void InitEnemyCharacter(List<EnemyData> enemyDatas)
         {
             this.enemyDatas = enemyDatas;
@@ -149,6 +147,15 @@ namespace NumGates.TestBattle
             CheckBattleReady();
         }
 
+        public List<EnemyData> GetEnemyDatas()
+        {
+            return enemyDatas;
+        }
+
+        public void ResetEnemyDatas()
+        {
+            enemyDatas.Clear();
+        }
         #endregion
     }
 }

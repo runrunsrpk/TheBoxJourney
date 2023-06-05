@@ -113,7 +113,7 @@ namespace NumGates.TestBattle
             {
                 allyIndex++;
 
-                if(ally.info.character != AllyCharacter.EmptyAlly)
+                if(ally.info.character != AllyCharacter.ALY000)
                 {
                     Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
                     spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
@@ -138,11 +138,14 @@ namespace NumGates.TestBattle
             {
                 enemyIndex++;
 
-                Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy.info.character).GetComponent<Enemy>(), enemyParent.transform);
-                spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, enemies.Count, BattleGroup.Enemy));
-                spawnedEnemy.InitCharacter(this);
+                if (enemy.info.character != EnemyCharacter.ENE000)
+                {
+                    Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy.info.character).GetComponent<Enemy>(), enemyParent.transform);
+                    spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, enemies.Count, BattleGroup.Enemy));
+                    spawnedEnemy.InitCharacter(this);
 
-                this.enemies.Add(spawnedEnemy);
+                    this.enemies.Add(spawnedEnemy);
+                }
             }
         }
 

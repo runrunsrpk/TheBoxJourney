@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7953237743885870633}
   - component: {fileID: 7953237743885870632}
   m_Layer: 0
-  m_Name: RedAlly
+  m_Name: ALY001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ namespace NumGates.TestBattle
 
         public AllyInfo GetAsset(AllyCharacter ally)
         {
-            string guid = GetAssetGUID($"{ally}Info", assetFormat);
+            string guid = GetAssetGUID($"{ally}_Info", assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;
         }
 
