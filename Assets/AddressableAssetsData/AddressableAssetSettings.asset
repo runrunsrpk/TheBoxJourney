@@ -85,10 +85,11 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Manager
-    - Character
-    - Ally
-    - Enemy
     - UI
+    - Ally
+    - AllyInfo
+    - Enemy
+    - EnemyInfo
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: a01d4757c7aa7d640969c78bbd835dd5, type: 2}

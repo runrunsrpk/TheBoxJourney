@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b68c1f301d0f95d49a7be80238c21291
+guid: 929e85a1b8b62fa498a9a7957bcf68b7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: 4
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spr_Idle_strip_0
+      name: ENE002_Knight_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da50f8c4622f156408854474acb90d4e
-      internalID: -362066931
+      spriteID: 11e0260c94b6c5d4281aaa3e4c94274b
+      internalID: -990754038
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_1
+      name: ENE002_Knight_1
       rect:
         serializedVersion: 2
-        x: 170
+        x: 64
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 298f5d589d6f3a44680f865899d0e114
-      internalID: -1107268924
+      spriteID: bc96d673c0235cf48b87531642f64caa
+      internalID: -1705516041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_2
+      name: ENE002_Knight_2
       rect:
         serializedVersion: 2
-        x: 340
+        x: 128
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52cf976d1d66dc249b62c3474f5e820e
-      internalID: 557386689
+      spriteID: 19c2842174ed25e4284cbe9b76633888
+      internalID: 1747005047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_3
+      name: ENE002_Knight_3
       rect:
         serializedVersion: 2
-        x: 510
+        x: 192
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a11f07265c1630438d90ba5f633b150
-      internalID: 1736240809
+      spriteID: 2a0ea2d88585fcf4ab0ea2a46fac0ee4
+      internalID: 251683766
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_4
+      name: ENE002_Knight_4
       rect:
         serializedVersion: 2
-        x: 680
+        x: 256
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +203,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 301597a727fe9854897358ac040dad34
-      internalID: -852552971
+      spriteID: ee175704dc108ad4b968de2a9c800bc5
+      internalID: -1021149443
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_5
+      name: ENE002_Knight_5
       rect:
         serializedVersion: 2
-        x: 850
+        x: 320
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,20 +224,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2ec400ccd71d624a9707b45b6e0da9a
-      internalID: -1360582270
+      spriteID: 420eb7c95582e2f4180b46db0361fdd2
+      internalID: 136461868
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_6
+      name: ENE002_Knight_6
       rect:
         serializedVersion: 2
-        x: 1020
+        x: 384
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,20 +245,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b47cbd02a590ce4fa40b1e57969c212
-      internalID: 1255933619
+      spriteID: 2d9f492cec85a0447bf14f8eb4eedc3f
+      internalID: 390856844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_7
+      name: ENE002_Knight_7
       rect:
         serializedVersion: 2
-        x: 1190
+        x: 448
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,20 +266,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 941f7eb6e6a2a4e4eb05ec63fc58e516
-      internalID: 103699298
+      spriteID: 545b086cd63fb894192acc794d95c3b6
+      internalID: -2089128355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_8
+      name: ENE002_Knight_8
       rect:
         serializedVersion: 2
-        x: 1360
+        x: 512
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,20 +287,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6dba45759c6ffe4e86101fa00aaa6f2
-      internalID: 1270184513
+      spriteID: 46aae47be46d58347acc67c8f51d316a
+      internalID: -1650540178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_9
+      name: ENE002_Knight_9
       rect:
         serializedVersion: 2
-        x: 1530
+        x: 576
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -308,20 +308,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1f6f76cbbb0d0845bcacd786490170d
-      internalID: -2007701537
+      spriteID: 3f5e342237378c24cbcb369511f776d9
+      internalID: -886412071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_10
+      name: ENE002_Knight_10
       rect:
         serializedVersion: 2
-        x: 1700
+        x: 640
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -329,20 +329,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25f3ccfc44df9384d873a19bfbf7c744
-      internalID: 549487712
+      spriteID: bb3de64d6526e7b4b9796037da167179
+      internalID: 1693425307
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_11
+      name: ENE002_Knight_11
       rect:
         serializedVersion: 2
-        x: 1870
+        x: 704
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -350,20 +350,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73948976948158c4784008a82834be15
-      internalID: 247630843
+      spriteID: a449192bf3a77de43ae53fced0b309bd
+      internalID: -659747137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_12
+      name: ENE002_Knight_12
       rect:
         serializedVersion: 2
-        x: 2040
+        x: 768
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -371,20 +371,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2551650e454c0044990b5a9f918aebb8
-      internalID: 1680178794
+      spriteID: f8d3519eefcd10b44a5971934b0c58f8
+      internalID: -1475039443
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_13
+      name: ENE002_Knight_13
       rect:
         serializedVersion: 2
-        x: 2210
+        x: 832
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -392,20 +392,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6312e93e2eeb5954990ac2a24a4e5f3b
-      internalID: -277171563
+      spriteID: 29701822c067e0d42837b6feeb94fc76
+      internalID: 1702287618
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spr_Idle_strip_14
+      name: ENE002_Knight_14
       rect:
         serializedVersion: 2
-        x: 2380
+        x: 896
         y: 0
-        width: 170
-        height: 96
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -413,29 +413,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1efd431d2bbe0d94bb550badbc5952b3
-      internalID: 707494915
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spr_Idle_strip_15
-      rect:
-        serializedVersion: 2
-        x: 2550
-        y: 0
-        width: 170
-        height: 96
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e60b900491941644483832d9c9f5b59c
-      internalID: 852608647
+      spriteID: 60d028aabbf8b2c478ee5013f3edd77c
+      internalID: -1865795903
       vertices: []
       indices: 
       edges: []
@@ -451,22 +430,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      spr_Idle_strip_0: -362066931
-      spr_Idle_strip_1: -1107268924
-      spr_Idle_strip_10: 549487712
-      spr_Idle_strip_11: 247630843
-      spr_Idle_strip_12: 1680178794
-      spr_Idle_strip_13: -277171563
-      spr_Idle_strip_14: 707494915
-      spr_Idle_strip_15: 852608647
-      spr_Idle_strip_2: 557386689
-      spr_Idle_strip_3: 1736240809
-      spr_Idle_strip_4: -852552971
-      spr_Idle_strip_5: -1360582270
-      spr_Idle_strip_6: 1255933619
-      spr_Idle_strip_7: 103699298
-      spr_Idle_strip_8: 1270184513
-      spr_Idle_strip_9: -2007701537
+      ENE002_Knight_0: -990754038
+      ENE002_Knight_1: -1705516041
+      ENE002_Knight_10: 1693425307
+      ENE002_Knight_11: -659747137
+      ENE002_Knight_12: -1475039443
+      ENE002_Knight_13: 1702287618
+      ENE002_Knight_14: -1865795903
+      ENE002_Knight_2: 1747005047
+      ENE002_Knight_3: 251683766
+      ENE002_Knight_4: -1021149443
+      ENE002_Knight_5: 136461868
+      ENE002_Knight_6: 390856844
+      ENE002_Knight_7: -2089128355
+      ENE002_Knight_8: -1650540178
+      ENE002_Knight_9: -886412071
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

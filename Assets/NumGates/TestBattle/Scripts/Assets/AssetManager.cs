@@ -19,15 +19,19 @@ namespace NumGates.TestBattle
         [SerializeField] private AssetLoaderUI assetLoaderUI;
         [SerializeField] private AssetLoaderAlly assetLoaderAlly;
         [SerializeField] private AssetLoaderEnemy assetLoaderEnemy;
+        [SerializeField] private AssetLoaderAllyInfo assetLoaderAllyInfo;
+        [SerializeField] private AssetLoaderEnemyInfo assetLoaderEnemyInfo;
 
         [Header("UI Reference")]
         [SerializeField] private AssetLabelReference uiLable;
-        [SerializeField] private AssetReference uiFloatingText;
-        [SerializeField] private AssetReference uiBattleEvent;
 
         [Header("Character Reference")]
         [SerializeField] private AssetLabelReference allyLable;
         [SerializeField] private AssetLabelReference enemyLable;
+
+        [Header("Database Reference")]
+        [SerializeField] private AssetLabelReference allyInfoLable;
+        [SerializeField] private AssetLabelReference enemyInfoLable;
 
         private void Awake()
         {
@@ -42,41 +46,43 @@ namespace NumGates.TestBattle
             DontDestroyOnLoad(instance);
         }
 
-        private void Start()
-        {
-            //StartCoroutine(assetLoaderUI.LoadAssets(uiLable));
-            //StartCoroutine(assetLoaderAlly.LoadAssets(allyLable));
-            //StartCoroutine(assetLoaderEnemy.LoadAssets(enemyLable));
-
-        }
-
-        private void Update()
-        {
-
-        }
-
         public IEnumerator InitAssets()
         {
             yield return StartCoroutine(assetLoaderUI.LoadAssets(uiLable));
             yield return StartCoroutine(assetLoaderAlly.LoadAssets(allyLable));
+            yield return StartCoroutine(assetLoaderAllyInfo.LoadAssets(allyInfoLable));
             yield return StartCoroutine(assetLoaderEnemy.LoadAssets(enemyLable));
+            yield return StartCoroutine(assetLoaderEnemyInfo.LoadAssets(enemyInfoLable));
 
             OnLoadComplete?.Invoke();
         }
 
         #region UI Asset
 
-        public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(UIReference.UIFloatingText).GetComponent<UIFloatingText>();
-        public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
-        public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
-        public UIHealthGauge GetUIHealthGauge() => assetLoaderUI.GetAsset(UIReference.UIHealthGauge).GetComponent<UIHealthGauge>();
+        //public UIFloatingText GetUIFloatingText() => assetLoaderUI.GetAsset(UIReference.UIFloatingText).GetComponent<UIFloatingText>();
+        //public UIBattleEvent GetUIBattleEvent() => assetLoaderUI.GetAsset(UIReference.UIBattleEvent).GetComponent<UIBattleEvent>();
+        //public UITimerGauge GetUITimerGauge() => assetLoaderUI.GetAsset(UIReference.UITimerGauge).GetComponent<UITimerGauge>();
+        //public UIHealthGauge GetUIHealthGauge() => assetLoaderUI.GetAsset(UIReference.UIHealthGauge).GetComponent<UIHealthGauge>();
+        //public UIAllyManagement GetUIAllyManagement() => assetLoaderUI.GetAsset(UIReference.UIAllyManagement).GetComponent<UIAllyManagement>();
+        //public UICharacterIcon GetUICharacterIcon() => assetLoaderUI.GetAsset(UIReference.UICharacterIcon).GetComponent<UICharacterIcon>();
+
+        public GameObject GetUI(string ui) => assetLoaderUI.GetAsset(ui);
         #endregion
 
         #region Character Asset
 
-        public GameObject GetAllyCharacter(CharacterAlly ally) => assetLoaderAlly.GetAsset(ally);
-        public GameObject GetEnemyCharacter(CharacterEnemy enemy) => assetLoaderEnemy.GetAsset(enemy);
+        public GameObject GetAllyCharacter(AllyCharacter ally) => assetLoaderAlly.GetAsset(ally);
+        public GameObject GetEnemyCharacter(EnemyCharacter enemy) => assetLoaderEnemy.GetAsset(enemy);
 
+        #endregion
+
+        #region Database Asset
+
+        public AllyInfo GetAllyInfo(AllyCharacter ally) => assetLoaderAllyInfo.GetAsset(ally);
+        public List<AllyInfo> GetAllAllyInfo() => assetLoaderAllyInfo.GetAllAssets();
+
+        public EnemyInfo GetEnemyInfo(EnemyCharacter enemy) => assetLoaderEnemyInfo.GetAsset(enemy);
+        public List<EnemyInfo> GetAllEnemyInfo() => assetLoaderEnemyInfo.GetAllAssets();
         #endregion
     }
 }

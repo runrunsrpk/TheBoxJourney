@@ -21,8 +21,8 @@ namespace NumGates
         // Create UITimerGauge with customize setup
         public static UITimerGauge Create(Vector3 origin, Vector3 offset, float width, float height, float maxTimer, Transform parent)
         {
-            UITimerGauge timerGauge = Instantiate(AssetManager.instance.GetUITimerGauge(), parent);
-
+            GameObject uiTemp = Instantiate(AssetManager.instance.GetUI(UIReference.UITimerGauge), parent);
+            UITimerGauge timerGauge = uiTemp.GetComponent<UITimerGauge>();
             timerGauge.InitTimerGauge(origin, offset, width, height, maxTimer);
 
             return timerGauge;

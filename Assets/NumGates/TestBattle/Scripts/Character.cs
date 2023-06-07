@@ -46,6 +46,21 @@ namespace NumGates.TestBattle
             InitUIs();
         }
 
+        public void InitCharacter(BattleManager battleManager)
+        {
+            this.battleManager = battleManager;
+
+            InitStatus();
+            InitUIs();
+        }
+
+        public void InitTimer(TimerManager timerManager)
+        {
+            this.timerManager = timerManager;
+
+            InitTimerAction();
+        }
+
         protected void InitTimerAction()
         {
             timerManager.OnInitTimer += InitTimer;

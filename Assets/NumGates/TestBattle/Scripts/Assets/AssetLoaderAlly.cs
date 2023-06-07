@@ -6,19 +6,20 @@ using UnityEngine.AddressableAssets;
 
 namespace NumGates.TestBattle
 {
-    public enum CharacterAlly
+    public enum AllyCharacter
     {
-        RedAlly,
-        OrangeAlly,
-        YellowAlly,
-        GreenAlly
+        ALY000,
+        ALY001,
+        ALY002,
+        ALY003,
+        ALY005
     }
 
     public class AssetLoaderAlly : AssetLoader, IAssetLoader
     {
         private Dictionary<string, GameObject> cache = new Dictionary<string, GameObject>();
 
-        public GameObject GetAsset(CharacterAlly ally)
+        public GameObject GetAsset(AllyCharacter ally)
         {
             string guid = GetAssetGUID(ally.ToString(), assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;

@@ -22,11 +22,18 @@ namespace NumGates.TestBattle
         [SerializeField] private Button startButton;
         [SerializeField] private Button stopButton;
         [SerializeField] private Button resetButton;
+        [SerializeField] private Button clearButton;
 
         private LevelManager levelManager;
+        private UIManager uiManager;
 
         private void Awake()
         {
+            // Add onClick "Battle Setup Group"
+            allyButton.onClick.AddListener(OnClickAlly);
+            enemyButton.onClick.AddListener(OnClickEnemy);
+
+            // Add onClick "Battle Controller Group"
             startButton.onClick.AddListener(OnClickStart);
             stopButton.onClick.AddListener(OnClickStop);
             resetButton.onClick.AddListener(OnClickReset);
@@ -34,21 +41,31 @@ namespace NumGates.TestBattle
 
         private void Start()
         {
-            startButton.interactable = true;
+            startButton.interactable = false;
             stopButton.interactable = false;
-            resetButton.interactable = true;
+            resetButton.interactable = false;
         }
 
         private void OnDestroy()
         {
+            // Remove onClick "Battle Setup Group"
+            allyButton.onClick.RemoveListener(OnClickAlly);
+            enemyButton.onClick.RemoveListener(OnClickEnemy);
+
+            // Remove onClick "Battle Controller Group"
             startButton.onClick.RemoveListener(OnClickStart);
             stopButton.onClick.RemoveListener(OnClickStop);
             resetButton.onClick.RemoveListener(OnClickReset);
+
+            levelManager.OnBattleReady -= BattleReady;
         }
 
-        public void InitUIBattle(LevelManager levelManager)
+        public void InitUI()
         {
-            this.levelManager = levelManager;
+            levelManager = GameManager.instance.LevelManager;
+            uiManager = GameManager.instance.UIManager;
+
+            levelManager.OnBattleReady += BattleReady;
         }
 
         #region Battle Setup
@@ -56,6 +73,8 @@ namespace NumGates.TestBattle
         public void OnClickAlly()
         {
             Debug.Log($"Click 'ALLY' button");
+
+            uiManager.UIAllyManagement.Show();
         }
 
         public void OnClickSoulbox()
@@ -66,6 +85,8 @@ namespace NumGates.TestBattle
         public void OnClickEnemy()
         {
             Debug.Log($"Click 'ENEMY' button");
+
+            uiManager.UIEnemyManagement.Show();
         }
 
         public void OnClickOption()
@@ -76,6 +97,10 @@ namespace NumGates.TestBattle
         #endregion
 
         #region Battle Controller
+        private void BattleReady(bool isReady)
+        {
+            startButton.interactable = isReady;
+        }
 
         public void OnClickStart()
         {
@@ -110,6 +135,10 @@ namespace NumGates.TestBattle
             resetButton.interactable = false;
         }
 
+        public void OnClickClear()
+        {
+            // TODO: Change clear to remove all character and reset to reset battle data.
+        }
         #endregion
     }
 }

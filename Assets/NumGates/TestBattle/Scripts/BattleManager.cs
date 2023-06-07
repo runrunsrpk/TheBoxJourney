@@ -55,12 +55,12 @@ namespace NumGates.TestBattle
         #region Character Management
 
         // Bypass InitCharacter from LevelManager
-        public void InitCharacter(List<CharacterAlly> allies, List<CharacterEnemy> enemies)
+        public void InitCharacter(List<AllyCharacter> allies, List<EnemyCharacter> enemies)
         {
             int enemyIndex = 0;
             this.enemies = new List<Character>();
 
-            foreach (CharacterEnemy enemy in enemies)
+            foreach (EnemyCharacter enemy in enemies)
             {
                 enemyIndex++;
 
@@ -74,7 +74,7 @@ namespace NumGates.TestBattle
             int allyIndex = 0;
             this.allies = new List<Character>();
 
-            foreach (CharacterAlly ally in allies)
+            foreach (AllyCharacter ally in allies)
             {
                 allyIndex++;
 
@@ -86,6 +86,69 @@ namespace NumGates.TestBattle
                 this.allies.Add(spawnedAlly);
             }
         }
+
+        public void InitCharacterTimer()
+        {
+            foreach (Ally ally in allies)
+            {
+                ally.InitTimer(timerManager);
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.InitTimer(timerManager);
+            }
+        }
+
+        // InitAllyCharacter from ally management setting
+        public void InitAllyCharacter(List<AllyData> allies)
+        {
+            int allyIndex = 0;
+            this.allies = new List<Character>();
+
+            RemoveAllCharacters(BattleGroup.Ally);
+            DestroyAllCharacters(BattleGroup.Ally);
+
+            foreach (AllyData ally in allies)
+            {
+                allyIndex++;
+
+                if(ally.info.character != AllyCharacter.ALY000)
+                {
+                    Ally spawnedAlly = Instantiate(AssetManager.instance.GetAllyCharacter(ally.info.character).GetComponent<Ally>(), allyParent.transform);
+                    spawnedAlly.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(allyIndex, allies.Count, BattleGroup.Ally));
+                    spawnedAlly.SetFlipX(true);
+                    spawnedAlly.InitCharacter(this);
+
+                    this.allies.Add(spawnedAlly);
+                }
+            }
+        }
+
+        // InitEnemyCharacter from enemy management setting
+        public void InitEnemyCharacter(List<EnemyData> enemies)
+        {
+            int enemyIndex = 0;
+            this.enemies = new List<Character>();
+
+            RemoveAllCharacters(BattleGroup.Enemy);
+            DestroyAllCharacters(BattleGroup.Enemy);
+
+            foreach (EnemyData enemy in enemies)
+            {
+                enemyIndex++;
+
+                if (enemy.info.character != EnemyCharacter.ENE000)
+                {
+                    Enemy spawnedEnemy = Instantiate(AssetManager.instance.GetEnemyCharacter(enemy.info.character).GetComponent<Enemy>(), enemyParent.transform);
+                    spawnedEnemy.SetPosition(TheBoxCalculator.GetCharacterPositionFrontPivot(enemyIndex, enemies.Count, BattleGroup.Enemy));
+                    spawnedEnemy.InitCharacter(this);
+
+                    this.enemies.Add(spawnedEnemy);
+                }
+            }
+        }
+
 
         public void AddCharacter(BattleGroup group, Character character, int positionIndex)
         {

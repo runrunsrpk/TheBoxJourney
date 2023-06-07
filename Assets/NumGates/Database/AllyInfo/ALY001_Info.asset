@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c91132bcdf8714f831840ffd883202, type: 3}
+  m_Name: ALY001_Info
+  m_EditorClassIdentifier: 
+  character: 1
+  allyName: Red Soul
+  allyStory: No story
+  iconSprite: {fileID: -1423409299, guid: 48ebb9f6cc332784cbd296d2a492d627, type: 3}
+  halfBodySprite: {fileID: -1423409299, guid: 48ebb9f6cc332784cbd296d2a492d627, type: 3}
+  fullBodySprite: {fileID: -1423409299, guid: 48ebb9f6cc332784cbd296d2a492d627, type: 3}
+  styleStats:
+    baseStats:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0
+    attackerStyle:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0
+    defenderStyle:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0
+    energeticStyle:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0
+    beasterStyle:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0
+    souleaverStyle:
+      physicalAttack: 0
+      physicalDefense: 0
+      physicalResist: 0
+      timer: 0
+      speed: 0
+      dodge: 0
+      accuracy: 0
+      criticalDamage: 0
+      criticalChance: 0
+      criticalMultiplier: 0
+      health: 0
+      magicalAttack: 0
+      magicalDefense: 0
+      magicalResist: 0
+      healingPower: 0
+      healingEffect: 0
+      buffEffect: 0
+      debuffEffect: 0

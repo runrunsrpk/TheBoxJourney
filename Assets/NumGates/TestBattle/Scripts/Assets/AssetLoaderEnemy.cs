@@ -6,18 +6,19 @@ using UnityEngine.AddressableAssets;
 
 namespace NumGates.TestBattle
 {
-    public enum CharacterEnemy
+    public enum EnemyCharacter
     {
-        Enemy01,
-        Enemy02,
-        Enemy03
+        ENE000,
+        ENE001,
+        ENE002,
+        ENE003
     }
 
     public class AssetLoaderEnemy : AssetLoader, IAssetLoader
     {
         private Dictionary<string, GameObject> cache = new Dictionary<string, GameObject>();
 
-        public GameObject GetAsset(CharacterEnemy enemy)
+        public GameObject GetAsset(EnemyCharacter enemy)
         {
             string guid = GetAssetGUID(enemy.ToString(), assetFormat);
             return cache.ContainsKey(guid) ? cache[guid] : null;

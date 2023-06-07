@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e72d7b8468acb24882de87d5604318d, type: 3}
+  m_Name: ENE001_Info
+  m_EditorClassIdentifier: 
+  character: 1
+  enemyName: Name-001
+  enemyStory: Story-001
+  iconSprite: {fileID: 1129147194, guid: f011e37860ac2694e9ac06e9fbbf76dc, type: 3}
+  halfBodySprite: {fileID: 1129147194, guid: f011e37860ac2694e9ac06e9fbbf76dc, type: 3}
+  fullBodySprite: {fileID: 1129147194, guid: f011e37860ac2694e9ac06e9fbbf76dc, type: 3}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,58 +11,54 @@ namespace NumGates.TestBattle
         Trap
     }
 
+    public struct AllyData
+    {
+        public AllyInfo info;
+        public AllyStats stats;
+
+        public AllyData(AllyInfo info, AllyStats stats)
+        {
+            this.info = info;
+            this.stats = stats;
+        }
+    }
+
+    public struct EnemyData
+    {
+        public EnemyInfo info;
+        public EnemyStats stats;
+
+        public EnemyData(EnemyInfo info, EnemyStats stats)
+        {
+            this.info = info;
+            this.stats = stats;
+        }
+    }
+
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] private List<Ally> allies;
-        [SerializeField] private List<Enemy> enemies;
+        public Action<bool> OnBattleReady;
 
-        [SerializeField] private List<CharacterAlly> characterAllies;
-        [SerializeField] private List<CharacterEnemy> characterEnemies;
+        //[SerializeField] private List<AllyCharacter> characterAllies;
+        //[SerializeField] private List<EnemyCharacter> characterEnemies;
 
         [SerializeField] private TimerManager timerManagerPrefab;
         [SerializeField] private BattleManager battleManagerPrefab;
 
+        private List<AllyData> allyDatas = new List<AllyData>();
+        private List<EnemyData> enemyDatas = new List<EnemyData>();
+
         private TimerManager timerManager;
         private BattleManager battleManager;
 
-        private void Awake()
-        {
-
-        }
-
-        private void Start()
-        {
-            //InitManager();
-        }
-
-        private void Update()
-        {
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-            //    timerManager.StartTimer();
-            //}
-
-            //if (Input.GetKeyDown(KeyCode.A))
-            //{
-            //    InitManager();
-            //}
-        }
-
         public void InitManager()
         {
-            if(timerManager == null)
-            {
-                timerManager = Instantiate(timerManagerPrefab, transform);
-                timerManager.InitTimer();
-            }
+            timerManager = Instantiate(timerManagerPrefab, transform);
+            timerManager.InitTimer();
 
-            if(battleManager == null)
-            {
-                battleManager = Instantiate(battleManagerPrefab, transform);
-                battleManager.InitBattle(timerManager);
-                //battleManager.InitCharacter(allies, enemies);
-                battleManager.InitCharacter(characterAllies, characterEnemies);
-            }
+            battleManager = Instantiate(battleManagerPrefab, transform);
+            battleManager.InitBattle(timerManager);
+            //battleManager.InitCharacter(characterAllies, characterEnemies);
         }
 
         public void StartEvent(LevelEvent levelEvent)
@@ -101,6 +98,65 @@ namespace NumGates.TestBattle
             Destroy(timerManager.gameObject);
             Destroy(battleManager.gameObject);
         }
+
+        #region Character Data
+        private bool IsCharacterReady()
+        {
+            return allyDatas.Count > 0 && enemyDatas.Count > 0;
+        }
+
+        private void CheckBattleReady()
+        {
+            if (IsCharacterReady())
+            {
+                battleManager.InitCharacterTimer();
+            }
+
+            OnBattleReady?.Invoke(IsCharacterReady());
+        }
+        #endregion
+
+        #region Ally Data
+        public void InitAllyCharacter(List<AllyData> allyDatas)
+        {
+            this.allyDatas = allyDatas;
+
+            battleManager.InitAllyCharacter(allyDatas);
+
+            CheckBattleReady();
+        }
+
+        public List<AllyData> GetAllyDatas()
+        {
+            return allyDatas;
+        }
+
+        public void ResetAllyDatas()
+        {
+            allyDatas.Clear();
+        }
+        #endregion
+
+        #region Enemy Data
+        public void InitEnemyCharacter(List<EnemyData> enemyDatas)
+        {
+            this.enemyDatas = enemyDatas;
+
+            battleManager.InitEnemyCharacter(enemyDatas);
+
+            CheckBattleReady();
+        }
+
+        public List<EnemyData> GetEnemyDatas()
+        {
+            return enemyDatas;
+        }
+
+        public void ResetEnemyDatas()
+        {
+            enemyDatas.Clear();
+        }
+        #endregion
     }
 }
 
