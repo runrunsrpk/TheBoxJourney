@@ -6,9 +6,29 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace NumGates.TestBattle
-{
+{ 
     public class UIAllyManagement : UIBaseManagement<AllyInfo, AllyData, AllyCharacter>
     {
+        [Header("Customize Group")]
+        [SerializeField] private Button resetAllButton;
+        [SerializeField] private Button restatusButton;
+        [SerializeField] private TextMeshProUGUI allPointsText;
+        [SerializeField] private UIAllyStatCustomize strStat;
+        [SerializeField] private UIAllyStatCustomize agiStat;
+        [SerializeField] private UIAllyStatCustomize vitStat;
+        [SerializeField] private UIAllyStatCustomize dexStat;
+        [SerializeField] private UIAllyStatCustomize intStat;
+        [SerializeField] private UIAllyStatCustomize wisStat;
+        [SerializeField] private UIAllyStatCustomize chrStat;
+        [SerializeField] private UIAllyStatCustomize lukStat;
+
+        private PrimaryStatus tempPrimatyStatus;
+        private int allStatusPoints;
+
+        [Header("Detail Group")]
+        [SerializeField] private Button detailButton;
+        [SerializeField] private Button growthButton;
+
         #region Action
         protected override void ClickSelection(int index) 
         {
@@ -61,6 +81,15 @@ namespace NumGates.TestBattle
         public override void InitUI()
         {
             base.InitUI();
+
+            strStat.InitUI();
+            agiStat.InitUI();
+            vitStat.InitUI();
+            dexStat.InitUI();
+            intStat.InitUI();
+            wisStat.InitUI();
+            chrStat.InitUI();
+            lukStat.InitUI();
         }
         #endregion
 
@@ -81,7 +110,32 @@ namespace NumGates.TestBattle
             CheckPositionIndex(data.info.character);
         }
 
-        protected override void LoadCustomizeData() { }
+        protected override void LoadCustomizeData() 
+        {
+            AllyInfo info = tempInfos[0];
+            AllyData positionData = GetPositionData(info.character);
+
+            strStat.LoadStatPoint(positionData.stats.primaryStatus.STR);
+            agiStat.LoadStatPoint(positionData.stats.primaryStatus.AGI);
+            vitStat.LoadStatPoint(positionData.stats.primaryStatus.VIT);
+            dexStat.LoadStatPoint(positionData.stats.primaryStatus.DEX);
+            intStat.LoadStatPoint(positionData.stats.primaryStatus.INT);
+            wisStat.LoadStatPoint(positionData.stats.primaryStatus.WIS);
+            chrStat.LoadStatPoint(positionData.stats.primaryStatus.CHR);
+            lukStat.LoadStatPoint(positionData.stats.primaryStatus.LUK);
+
+            tempPrimatyStatus = new PrimaryStatus
+                (
+                    strStat.StatPoint,
+                    agiStat.StatPoint,
+                    vitStat.StatPoint,
+                    dexStat.StatPoint,
+                    intStat.StatPoint,
+                    wisStat.StatPoint,
+                    chrStat.StatPoint,
+                    lukStat.StatPoint
+                );
+        }
 
         protected override void LoadDetailData() { }
 

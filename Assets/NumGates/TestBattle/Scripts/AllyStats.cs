@@ -13,6 +13,7 @@ namespace NumGates.TestBattle
         public int statusPoint;
         public PrimaryStatus primaryStatus;
         public SecondaryStatus secondaryStatus;
+        public SecondaryStatus baseSecondaryStatus;
         public SoulColor soulColor;
         public SoulStyle primaryStyle;
         public SoulStyle secodaryStyle;
